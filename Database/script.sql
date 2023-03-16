@@ -1,32 +1,34 @@
-CREATE DATABASE ManagementEmployee;
-
+CREATE DATABASE IF NOT EXISTS ManagementEmployee;
+USE ManagementEmployee;
 -- CREATE TABLE ACCOUNT
-CREATE TABLE account(
+CREATE TABLE IF NOT EXISTS account(
 	id INT PRIMARY KEY AUTO_INCREMENT,
-	userName VARCHAR(100) NOT NULL,
-	password VARCHAR(50) NOT NULL,
-	roleId INT,
-	FOREIGN KEY(roleId) REFERENCES ROLE(id) 					-- 1 role has many account
-	
+	userName VARCHAR(100) NOT NULL UNIQUE,
+	password VARCHAR(50) NOT NULL
 );
 INSERT INTO 
-	ACCOUNT(userName, PASSWORD)
+	ACCOUNT(userName, password)
 VALUES 
 	("thipt1", "12345"),
 	("ngatt1", "12345");
 	
--- CREATE TABLE ROLE
-CREATE TABLE role(
+
+-- CREATE TABLE DEPARTMENT
+CREATE TABLE IF NOT EXISTS department(
 	id INT PRIMARY KEY AUTO_INCREMENT,
-	roleName VARCHAR(100) NOT NULL
+	departmentName VARCHAR(255),
+	deptAddress VARCHAR(255)	
 );
 INSERT INTO
-	ROLE(roleName)
-VALUES 
-	("Admin");
+	department(departmentName,deptAddress )
+VALUES
+	("Sale","Floor 1"),
+	("HR", "Floor 2"),
+	("Solution", "Floor 3");
+
 
 -- CREATE TABLE EMPLOYEE
-CREATE TABLE employee(
+CREATE TABLE IF NOT EXISTS employee(
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	firstName VARCHAR(255) NOT NULL, 
 	lastName VARCHAR(255) NOT NULL, 
@@ -37,32 +39,16 @@ CREATE TABLE employee(
 	email VARCHAR(255) NOT NULL, 
 	salary float NOT NULL,
 	personIncomeTax FLOAT NOT NULL,
-	departmentId INT, 
-	FOREIGN KEY(departmentId) REFERENCES department(id), 		 -- 1 department has many employee
-	accountId INT UNIQUE,
-	FOREIGN KEY(accountId) REFERENCES account(id), 				 -- 1 employee has 1 account
-	departmentManager int,
-	FOREIGN KEY(departmentManager) REFERENCES department(id)	-- 1 departmentManager has many employee
+	departmentId INT,
+	dept_ManagerID INT UNIQUE, 
+	FOREIGN KEY(departmentId) REFERENCES department(id),	 
+	FOREIGN KEY(dept_ManagerID) REFERENCES department(id)  
+
 );
 INSERT INTO 
 	employee(firstName, lastName,gender, birthday,hire_date,phoneNumber, email, salary,personIncomeTax)
 VALUES
 	("thi", "pham", 1, "1999-06-05", "2023-02-10", "0123456789","phamthi123@gmail.com", 1000, 100),
-	("nga", "tran", 1, "1996-09-22", "2023-02-10", "0123456789","ngatran1199@gmail.com", 1100, 100)
+	("nga", "tran", 1, "1996-09-22", "2023-02-10", "0123456789","ngatran1199@gmail.com", 1100, 100);
 
 
-
--- CREATE TABLE DEPARTMENT
-CREATE TABLE department(
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	departmentName VARCHAR(255),
-	departmentManager int
-);
-INSERT INTO
-	department(departmentName)
-VALUES
-	("Sale"),
-	("HR"),
-	("Solution")
-
-SELECT * FROM employee;
