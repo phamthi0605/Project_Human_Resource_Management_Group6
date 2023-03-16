@@ -1,4 +1,5 @@
 CREATE DATABASE IF NOT EXISTS ManagementEmployee;
+
 USE ManagementEmployee;
 -- CREATE TABLE ACCOUNT
 CREATE TABLE IF NOT EXISTS account(
@@ -9,8 +10,8 @@ CREATE TABLE IF NOT EXISTS account(
 INSERT INTO 
 	ACCOUNT(userName, password)
 VALUES 
-	("thipt1", "12345"),
-	("ngatt1", "12345");
+	("admin", "12345");
+
 	
 
 -- CREATE TABLE DEPARTMENT
