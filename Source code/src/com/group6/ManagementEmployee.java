@@ -1,10 +1,19 @@
 package com.group6;
 
+import java.nio.charset.StandardCharsets;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
 
 public class ManagementEmployee {
     private Employee employee;
     private Admin admin;
+    Scanner scanner = new Scanner(System.in);
+
+    public ManagementEmployee() {
+
+    }
 
     public ManagementEmployee(Admin admin) {
         this.admin = admin;
@@ -14,6 +23,11 @@ public class ManagementEmployee {
         this.employee = employee;
     }
 
+    /**
+     * Login in to the program
+     *
+     * @return true: login successfully and return false login failed
+     */
     public boolean login() {
         Connection con = null;
         DBContext db = new DBContext();
@@ -35,6 +49,9 @@ public class ManagementEmployee {
 
     }
 
+    /**
+     * Add new employees to the database
+     */
     public void addEmployee() {
         try {
             Connection con = null;
@@ -45,7 +62,7 @@ public class ManagementEmployee {
                     "VALUES ('" + employee.getEmployee_id() + "', '" + employee.getFullName() + "', '" + employee.getPosition() + "'," +
                     "'" + employee.getEmail() + "', '" + employee.getSalary() + "', '" + employee.getPerson_Income_Tax() + "', '" + employee.getHire_date() + "'," +
                     " '" + employee.getDepartment_id() + "', " + employee.getIs_manager() + ")";
-            
+
             PreparedStatement sm = con.prepareStatement(sql);
             int count = sm.executeUpdate();
             if (count > 0) {
@@ -61,4 +78,53 @@ public class ManagementEmployee {
         }
     }
 
+    /**
+     * Add employees to the database
+     */
+    public void updateEmployee() {
+        String sql = "UPDATE employee SET full_name = ?, position=?, age=?, phone =?, email = ?, " +
+                "salary =?, person_Income_Tax=?, hire_date=?, department_id=?, is_manager=?" +
+                " WHERE employee_id = ?";
+        try {
+            Connection con = null;
+            DBContext db = new DBContext();
+            con = db.getConnection();
+
+            PreparedStatement psmt = con.prepareStatement(sql);
+
+            // set value for parameter of sql statement
+            psmt.setString(1, employee.getFullName());
+            psmt.setString(2, employee.getPosition());
+            psmt.setInt(3, employee.getAge());
+            psmt.setString(4, employee.getPhoneNumber());
+            psmt.setString(5, employee.getEmail());
+            psmt.setFloat(6, employee.getSalary());
+            psmt.setFloat(7, employee.getPerson_Income_Tax());
+            psmt.setString(8, employee.getHire_date());
+            psmt.setInt(9, employee.getDepartment_id());
+            psmt.setString(10, employee.getIs_manager());
+
+            psmt.setInt(11, employee.getEmployee_id());
+
+            psmt.executeUpdate();
+            int count = psmt.executeUpdate();
+            if (count > 0) {
+                System.out.println("Update employee successfully!");
+            } else {
+                System.out.println("Update failed!");
+            }
+            psmt.close();
+            con.close();
+
+        } catch (SQLException e) {
+            e.getMessage();
+        }
+    }
+
+    /**
+     * Remove employee by employee id
+     */
+    public void removeEmployee() {
+
+    }
 }

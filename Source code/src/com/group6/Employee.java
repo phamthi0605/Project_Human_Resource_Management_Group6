@@ -6,15 +6,47 @@ public class Employee {
     private int employee_id;
     private String fullName;
     private String position;
+    private int age;
+    private String phoneNumber;
     private String email;
     private float salary;
     private float person_Income_Tax;
     private String hire_date;
+    private String endDate;
     private int department_id;
     private String is_manager;
 
     public Employee() {
 
+    }
+
+    public Employee(int employeeId, String fullName, String position, String email,
+                    float salary, float tax, String hireDate, int deptID, String isManager) {
+        this.employee_id = employeeId;
+        this.fullName = fullName;
+        this.position = position;
+        this.email = email;
+        this.salary = salary;
+        this.person_Income_Tax = tax;
+        this.hire_date = hireDate;
+        this.department_id = deptID;
+        this.is_manager = isManager;
+    }
+
+    public Employee(int employee_id, String fullName, String position, int age,
+                    String phoneNumber, String email, float salary, float person_Income_Tax,
+                    String hire_date, int department_id, String is_manager) {
+        this.employee_id = employee_id;
+        this.fullName = fullName;
+        this.position = position;
+        this.age = age;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.salary = salary;
+        this.person_Income_Tax = person_Income_Tax;
+        this.hire_date = hire_date;
+        this.department_id = department_id;
+        this.is_manager = is_manager;
     }
 
     public int getEmployee_id() {
@@ -99,16 +131,43 @@ public class Employee {
         this.is_manager = is_manager;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
                 "employee_id=" + employee_id +
                 ", fullName='" + fullName + '\'' +
                 ", position='" + position + '\'' +
+                ", age=" + age +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", salary=" + salary +
                 ", person_Income_Tax=" + person_Income_Tax +
-                ", hire_date=" + hire_date +
+                ", hire_date='" + hire_date + '\'' +
+                ", endDate='" + endDate + '\'' +
                 ", department_id=" + department_id +
                 ", is_manager='" + is_manager + '\'' +
                 '}';
