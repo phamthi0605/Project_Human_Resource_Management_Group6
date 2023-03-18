@@ -142,4 +142,42 @@ public class ManagementEmployee {
             e.getMessage();
         }
     }
+
+    public ResultSet getEmployee() {
+        Connection con = null;
+        DBContext db = new DBContext();
+        con = db.getConnection();
+        ResultSet result = null;
+        try {
+            Statement sm = con.createStatement();
+            result = sm.executeQuery("select * from employee");
+            if (result.next() == false) {
+                System.out.println("Data empty!");
+            } else {
+                System.out.printf("%-8s%-15s%-20s%-15s%-10s%-16s%-25s%-20s%-20s%-10s\n", "ID", "EmployeeID", "FullName", "Position", "Age", "Phone", "Email", "Salary", "Tax", "DepartmentID");
+                do {
+                    int id = result.getInt("id");
+                    String employeeId = result.getString("employee_id");
+                    String fullName = result.getString("full_name");
+                    String position = result.getString("position");
+                    int age = result.getInt("age");
+                    String phoneNumber = result.getString("phone");
+                    String email = result.getString("email");
+                    float salary = result.getFloat("salary");
+                    float tax = result.getFloat("person_Income_Tax");
+//                    Date hireDate = result.getDate("hire_date");
+//                    Date endDate = result.getDate("end_date");
+                    int deptID = result.getInt("department_id");
+                    System.out.printf("%-8d%-15s%-20s%-15s%-10d%-16s%-25s%-20f%-20f%-10d\n", id, employeeId, fullName, position, age, phoneNumber, email, salary, tax, deptID);
+
+                }
+                while (result.next());
+            }
+        } catch (SQLException e) {
+            e.getMessage();
+        }
+
+        return result;
+    }
+
 }

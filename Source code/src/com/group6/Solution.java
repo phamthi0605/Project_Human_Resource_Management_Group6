@@ -135,6 +135,7 @@ public class Solution {
                             }
                             if (subOption == 5) {
                                 System.out.println("Hiển thị danh sách nhân viên");
+                                managementEmployee.getEmployee();
                             }
                             if (subOption == 6) {
                                 System.out.println("Thoát");
@@ -168,7 +169,8 @@ public class Solution {
         System.out.println("\t2.Update employee");
         System.out.println("\t3.Remove employee");
         System.out.println("\t4.Find employee");
-        System.out.println("\t5.Exit");
+        System.out.println("\t5.List employee");
+        System.out.println("\t6. Exit");
     }
 
     public static void menuDepartment() {
