@@ -1,16 +1,15 @@
 package com.group6;
 
-public class Account {
+public class Admin {
     private int accountID;
     private String userName;
     private String password;
 
-    public Account() {
+    public Admin() {
 
     }
 
-    public Account(int accountID, String userName, String password) {
-        this.accountID = accountID;
+    public Admin(String userName, String password) {
         this.userName = userName;
         this.password = password;
     }

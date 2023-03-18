@@ -17,7 +17,7 @@ public class DBContext {
         return conn;
     }
 
-    private static String DB_URL = "jdbc:mysql://localhost:3306/ManagementEmployee";
+    private static String DB_URL = "jdbc:mysql://localhost:3306/hr_management";
     private static String USER_NAME = "root";
     private static String PASSWORD = "123456";
 }

@@ -38,8 +38,8 @@ CREATE TABLE employee(
 
 INSERT INTO employee(employee_id, full_name, position, age, phone, email, salary, hire_date, end_date)
 VALUES
-		('1', 'Pham Thi Thi', 'developer', 24, '0123456789', 'thipt1@gmail.com', 1000, '2019-02-12', NULL),  
-		('2', 'Tran Thi Nga', 'tester', 26, '076721783', 'ngatran12@gmail.com',900, '2020-03-12', NULL);
+		('1', 'Pham Thi Thi', 'developer', 24, '0123456789', 'thipt1@gmail.com', 10000000, '2019-02-12', NULL),  
+		('2', 'Tran Thi Nga', 'tester', 26, '076721783', 'ngatran12@gmail.com',9000000, '2020-03-12', NULL);
 	
 
 
@@ -77,3 +77,4 @@ VALUES
 
 
 
+department
