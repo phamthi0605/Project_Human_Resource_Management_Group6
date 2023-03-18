@@ -85,6 +85,7 @@ public class Solution {
                                 }
                                 employee = new Employee(employeeId, fullName, position, email, salary, tax, hireDate, deptId, isManager);
                                 ManagementEmployee managementEmployee = new ManagementEmployee(employee);
+                                //System.out.println(employee);
                                 managementEmployee.addEmployee();
                             }
                             if (subOption == 2) {
@@ -158,7 +159,60 @@ public class Solution {
                             }
                             break;
                         case 3:
-                            System.out.println("Danh sách phòng ban");
+                            ManagementDepartment mgtd = new ManagementDepartment();
+                            System.out.println("\tMANAGEMENT DEPARTMENT");
+                            menuDepartment();
+                            System.out.println("\tChọn chức năng quản lý phòng ban:");
+                            int optionDept = Validation.checkInputInt();
+                            while (optionDept < 1 || optionDept > 7) {
+                                System.out.println("Chọn lại chức năng: ");
+                                optionDept = Validation.checkInputInt();
+                            }
+                            if (optionDept == 1) {
+                                System.out.println("Thêm phòng ban");
+                                Department department = new Department();
+                                System.out.println("Tên phòng ban: ");
+                                String deptName = scanner.nextLine();
+                                department.setDepartmentName(deptName);
+                                System.out.println("Địa chỉ: ");
+                                String address = scanner.nextLine();
+                                department.setAddress(address);
+                                ManagementDepartment management = new ManagementDepartment(department);
+                                management.addDepartment();
+                            }
+                            if (optionDept == 2) {
+                                System.out.println("Cập nhật phòng ban");
+                                System.out.println("Nhập mã phòng ban cần cập nhật: ");
+                                int deptId = Integer.parseInt(scanner.nextLine());
+                                System.out.println("Tên phòng ban:");
+                                String deptNameUpdate = scanner.nextLine();
+                                System.out.println("Địa chỉ: ");
+                                String addressUpdate = scanner.nextLine();
+                                Department department = new Department(deptId, deptNameUpdate, addressUpdate);
+                                ManagementDepartment management = new ManagementDepartment(department);
+                                management.updateDepartment();
+                            }
+                            if (optionDept == 3) {
+                                System.out.println("Xoá phòng ban");
+                                mgtd.removeDepartment();
+                            }
+                            if (optionDept == 4) {
+                                System.out.println("Xoá nhân viên từ phòng ban");
+
+                                //mgtd.removeEmployeeByDepartmentId();
+                            }
+                            if (optionDept == 5) {
+                                System.out.println("Chuyển phòng ban cho nhân viên");
+                            }
+                            if (optionDept == 6) {
+                                System.out.println("Danh sách phòng ban");
+                                ManagementDepartment management = new ManagementDepartment();
+                                management.getDepartment();
+                            }
+                            if (optionDept == 7) {
+                                System.out.println("Thoát");
+                                break;
+                            }
                             break;
                         case 4:
                             System.out.println("Exit");
@@ -189,14 +243,13 @@ public class Solution {
     }
 
     public static void menuDepartment() {
-        System.out.println("\tMANAGEMENT DEPARTMENT");
-        System.out.println("\tAdd department");
-        System.out.println("\tUpdate department");
-        System.out.println("\tRemove department");
-        System.out.println("\tAdd employee in department");
-        System.out.println("\tRemove employee from department");
-        System.out.println("\tChange department from employee");
-        System.out.println("\tExit");
+        System.out.println("\t1.Add department");
+        System.out.println("\t2.Update department");
+        System.out.println("\t3.Remove department");
+        System.out.println("\t4.Remove employee from department");
+        System.out.println("\t5.Change department from employee");
+        System.out.println("\t6.List department");
+        System.out.println("\t7.Exit");
     }
 
 
