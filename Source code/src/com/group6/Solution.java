@@ -9,6 +9,7 @@ import java.util.SimpleTimeZone;
 
 public class Solution {
     static Scanner scanner = new Scanner(System.in);
+    static ManagementEmployee managementEmployee = new ManagementEmployee();
     //static ManagementEmployee account = new ManagementEmployee(new Admin("thipt1", "1234"));
 
     public static void main(String[] args) {
@@ -126,7 +127,8 @@ public class Solution {
                                 break;
                             }
                             if (subOption == 3) {
-
+                                System.out.println("Xoá nhân viên");
+                                managementEmployee.removeEmployee();
                             }
                             if (subOption == 4) {
                                 System.out.println("Tìm kiếm nhân viên");

@@ -125,6 +125,21 @@ public class ManagementEmployee {
      * Remove employee by employee id
      */
     public void removeEmployee() {
+        Scanner scanner = new Scanner(System.in);
+        String sql = "DELETE from employee WHERE employee_id = ?";
+        try {
+            Connection con = null;
+            DBContext db = new DBContext();
+            con = db.getConnection();
 
+            PreparedStatement sm = con.prepareStatement(sql);
+            System.out.println("Please enter employee id to remove:");
+            int employeeId = scanner.nextInt();
+            sm.setInt(1, employeeId);
+            sm.executeUpdate();
+            System.out.println("Delete successfully!");
+        } catch (SQLException e) {
+            e.getMessage();
+        }
     }
 }
