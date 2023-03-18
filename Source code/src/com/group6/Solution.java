@@ -41,7 +41,7 @@ public class Solution {
                 System.out.println("Đăng nhập thành công!");
                 while (true) {
                     menuProgram();
-                    System.out.println("Vui lòng nhập từ 2 đến 4 để chọn chức năng muốn sử dụng");
+                    System.out.println("Vui lòng nhập từ 2 đến 4 để chọn chức năng muốn sử dụng:");
                     choose = Validation.checkInputInt();
                     switch (choose) {
                         case 2:
@@ -131,7 +131,22 @@ public class Solution {
                                 managementEmployee.removeEmployee();
                             }
                             if (subOption == 4) {
-                                System.out.println("Tìm kiếm nhân viên");
+                                System.out.println("Tìm kiếm nhân viên theo bất kì mã, tên, số điện thoại hoặc email: ");
+                                Employee searchEmp = new Employee();
+                                System.out.println("Nhập mã nhân viên muốn tìm kiếm: ");
+                                int employeeID = Integer.parseInt(scanner.nextLine());
+                                searchEmp.setEmployee_id(employeeID);
+                                System.out.println("Nhập tên nhân viên muốn tìm kiếm: ");
+                                String fullName = scanner.nextLine();
+                                searchEmp.setFullName(fullName);
+                                System.out.println("Nhập số điện thoại muốn tìm kiếm: ");
+                                String phone = scanner.nextLine();
+                                searchEmp.setPhoneNumber(phone);
+                                System.out.println("Nhập email muốn tìm kiếm: ");
+                                String email = scanner.nextLine();
+                                searchEmp.setEmail(email);
+                                ManagementEmployee managementEmployee = new ManagementEmployee(searchEmp);
+                                managementEmployee.searchEmployee();
                             }
                             if (subOption == 5) {
                                 System.out.println("Hiển thị danh sách nhân viên");
