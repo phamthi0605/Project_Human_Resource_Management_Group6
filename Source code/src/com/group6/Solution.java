@@ -59,12 +59,12 @@ public class Solution {
                             System.out.println("\tQUẢN LÝ NHÂN VIÊN");
                             menuEmployee();
                             System.out.println("\tChọn chức năng quản lý nhân viên:");
-                            int subOption = Validation.checkInputInt();
-                            while (subOption < 1 || subOption > 6) {
+                            int optionEmp = Validation.checkInputInt();
+                            while (optionEmp < 1 || optionEmp > 6) {
                                 System.out.println("Chọn lại chức năng: ");
-                                subOption = Validation.checkInputInt();
+                                optionEmp = Validation.checkInputInt();
                             }
-                            if (subOption == 1) {
+                            if (optionEmp == 1) {
                                 System.out.println("Hiển thị danh sách nhân viên");
                                 List<Employee> employeeList = managementEmployee.getListEmployee();
                                 System.out.printf("%-15s%-20s%-15s%-10s%-16s%-25s%-20s%-20s%-16s%-10s\n", "EmployeeID", "FullName", "Position", "Age", "Phone", "Email", "Salary", "Tax", "DepartmentID", "IsManager");
@@ -72,7 +72,7 @@ public class Solution {
                                     employee.showData();
                                 }
                             }
-                            if (subOption == 2) {
+                            if (optionEmp == 2) {
                                 List<Employee> employeeList = managementEmployee.getListEmployee();
                                 while (true) {
                                     Employee employee = new Employee();
@@ -118,7 +118,7 @@ public class Solution {
                                 }
 
                             }
-                            if (subOption == 3) {
+                            if (optionEmp == 3) {
                                 List<Employee> employeeList = managementEmployee.getListEmployee();
                                 if (employeeList.isEmpty()) {
                                     System.err.println("List empty.");
@@ -197,7 +197,7 @@ public class Solution {
 
                                 }
                             }
-                            if (subOption == 4) {
+                            if (optionEmp == 4) {
                                 System.out.println("Xoá nhân viên");
                                 System.out.println("Please enter employee id to remove:");
                                 String employeeId = scanner.nextLine();
@@ -206,7 +206,7 @@ public class Solution {
                                 ManagementEmployee manage = new ManagementEmployee(employee);
                                 manage.removeEmployee();
                             }
-                            if (subOption == 5) {
+                            if (optionEmp == 5) {
                                 System.out.println("Tìm kiếm nhân viên theo bất kì mã, tên, số điện thoại hoặc email: ");
                                 Employee searchEmp = new Employee();
                                 System.out.println("Nhập mã nhân viên muốn tìm kiếm: ");
@@ -224,7 +224,7 @@ public class Solution {
                                 ManagementEmployee managementEmployee = new ManagementEmployee(searchEmp);
                                 managementEmployee.searchEmployee();
                             }
-                            if (subOption == 6) {
+                            if (optionEmp == 6) {
                                 System.out.println("Thoát");
                                 break;
                             }
@@ -287,14 +287,7 @@ public class Solution {
                                 management.updateDepartment();
                             }
                             if (optionDept == 4) {
-//                                System.out.println("Xoá phòng ban");
-//                                Department dept = new Department();
-//                                System.out.println("Nhập phòng ban để check: ");
-//                                int deptID = scanner.nextInt();
-//                                dept.setDepartmentId(deptID);
-//                                ManagementDepartment managementDepartment = new ManagementDepartment(dept);
-//                                int countEmployeeID = managementDepartment.getEmployeeByDeptID();
-//                                System.out.println(countEmployeeID);
+
                             }
                             if (optionDept == 5) {
                                 System.out.println("Xoá nhân viên từ phòng ban");
