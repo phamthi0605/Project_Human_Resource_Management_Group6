@@ -106,12 +106,7 @@ public class ManagementDepartment {
             PreparedStatement sm = con.prepareStatement(sql);
             sm.setInt(1, department.getDepartmentId());
             sm.executeUpdate();
-            int count = sm.executeUpdate();
-            if (count > 0) {
-                System.out.println("Delete department successfully!");
-            } else {
-                System.out.println("Delete department failed!");
-            }
+            System.out.println("Delete department successfully!");
 
         } catch (SQLException e) {
             e.getMessage();
