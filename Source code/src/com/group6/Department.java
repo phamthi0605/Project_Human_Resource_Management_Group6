@@ -39,12 +39,8 @@ public class Department {
         this.address = address;
     }
 
-    @Override
-    public String toString() {
-        return "Department{" +
-                "departmentId=" + departmentId +
-                ", departmentName='" + departmentName + '\'' +
-                ", address='" + address + '\'' +
-                '}';
+
+    public void showData() {
+        System.out.printf("%-10d%-21s%-13s\n", departmentId, departmentName, address);
     }
 }

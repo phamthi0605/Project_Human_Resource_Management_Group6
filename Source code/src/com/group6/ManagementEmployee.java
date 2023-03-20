@@ -111,7 +111,7 @@ public class ManagementEmployee {
             psmt.executeUpdate();
             int count = psmt.executeUpdate();
             if (count > 0) {
-                System.out.println("Update employee successfully!");
+                employee.showData();
             } else {
                 System.out.println("Update failed!");
             }
@@ -142,7 +142,7 @@ public class ManagementEmployee {
             e.getMessage();
         }
     }
-    
+
 
     public ResultSet searchEmployee() {
         Connection con = null;
@@ -253,4 +253,17 @@ public class ManagementEmployee {
 
         return list;
     }
+
+    //Get list employee find by id
+    public List<Employee> getListEmployeeById(List<Employee> ls, String employeeID) {
+        List<Employee> getList = new ArrayList<>();
+        for (Employee employee : ls) {
+            if (employeeID.equalsIgnoreCase(employee.getEmployee_id())) {
+                getList.add(employee);
+            }
+        }
+        return getList;
+    }
+
+
 }

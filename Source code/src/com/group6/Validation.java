@@ -46,11 +46,7 @@ public class Validation {
             if (result.equalsIgnoreCase("U")) {
                 return true;
             }
-            //return false if user input d/D
-            if (result.equalsIgnoreCase("D")) {
-                return false;
-            }
-            System.err.println("Please input u/U or d/D.");
+            System.err.println("Please input u/U :");
             System.out.print("Enter again: ");
         }
     }
@@ -113,5 +109,16 @@ public class Validation {
 
         return true;
     }
+
+    public static boolean checkDepartment(List<Department> list, int deptID, String departName) {
+        for (Department department : list) {
+            if (deptID == department.getDepartmentId()
+                    && !departName.equalsIgnoreCase(department.getDepartmentName())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
 }

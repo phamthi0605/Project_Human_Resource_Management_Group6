@@ -1,6 +1,8 @@
 package com.group6;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ManagementDepartment {
@@ -19,40 +21,32 @@ public class ManagementDepartment {
         this.employee = employee;
     }
 
-    /**
-     * Get department from database
-     *
-     * @return record from table department
-     */
-
-    public ResultSet getDepartment() {
+    public List<Department> getListDepartment() {
+        List<Department> list = new ArrayList<>();
         Connection con = null;
         DBContext db = new DBContext();
         con = db.getConnection();
-        ResultSet rs = null;
+        Statement sm = null;
         try {
-            Statement sm = con.createStatement();
-            rs = sm.executeQuery("SELECT * FROM department");
-            if (rs.next() == false) {
+            sm = con.createStatement();
+            ResultSet rs = sm.executeQuery("SELECT * FROM department");
+            if (!rs.next()) {
                 System.out.println("Data empty!");
             } else {
-                System.out.printf("%-10s%-21s%-13s\n", "ID", "Departmentn Name", "Address");
                 do {
-                    int id = rs.getInt("id");
-                    String fullName = rs.getString("department_name");
-                    String address = rs.getString("address");
-
-
-                    System.out.printf("%-10d%-21s%-13s\n", id, fullName, address);
-                }
-                while (rs.next());
+                    Department department = new Department(
+                            rs.getInt("id"),
+                            rs.getString("department_name"),
+                            rs.getString("address")
+                    );
+                    list.add(department);
+                } while (rs.next());
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return rs;
+        return list;
     }
 
     public void addDepartment() {
