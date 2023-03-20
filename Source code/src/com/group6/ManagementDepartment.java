@@ -97,17 +97,22 @@ public class ManagementDepartment {
     }
 
     public void removeEmployeeByDeptID() {
-        Scanner scanner = new Scanner(System.in);
-        String sql = "DELETE from employee WHERE id = ?";
+        String sql = "DELETE from department WHERE id = ?";
         try {
             Connection con = null;
             DBContext db = new DBContext();
             con = db.getConnection();
 
             PreparedStatement sm = con.prepareStatement(sql);
-            sm.setString(1, employee.getEmployee_id());
+            sm.setInt(1, department.getDepartmentId());
             sm.executeUpdate();
-            System.out.println("Delete successfully!");
+            int count = sm.executeUpdate();
+            if (count > 0) {
+                System.out.println("Delete department successfully!");
+            } else {
+                System.out.println("Delete department failed!");
+            }
+
         } catch (SQLException e) {
             e.getMessage();
         }

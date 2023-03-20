@@ -3,10 +3,8 @@ package com.group6;
 import java.lang.reflect.AccessibleObject;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
-import java.util.SimpleTimeZone;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Solution {
     static Scanner scanner = new Scanner(System.in);
@@ -319,6 +317,29 @@ public class Solution {
                             }
                             if (optionDept == 4) {
                                 System.out.println("Xoá phòng ban");
+                                //Hiển thị danh sách tất cả nhân viên trong 1 phòng ban : trả về 1 list
+                                // rồi kiểm tra xem list đó có nhân viên ko : nếu có thì in ra ko xoá department dc
+                                // nếu list ko có nhân viên thì thực hiện xoá
+                                Employee employee = new Employee();
+                                System.out.println("Nhập mã phòng ban: ");
+                                int deptId = Validation.checkInputInt();
+                                employee.setDepartment_id(deptId);
+                                ManagementEmployee managementEmployee = new ManagementEmployee(employee);
+                                List<Employee> employeeList = managementEmployee.getListEmployeeByDeptId();
+                                if (employeeList.size() > 0) {
+                                    System.out.println(employeeList.size());
+                                    System.out.println("Phòng ban " + deptId + " đang tồn tại " + employeeList.size() + " viên nhân. Không thể xoá!");
+                                    System.out.printf("%-15s%-20s%-15s%-10s%-16s%-25s%-20s%-20s%-16s%-10s\n", "EmployeeID", "FullName", "Position", "Age", "Phone", "Email", "Salary", "Tax", "DepartmentID", "IsManager");
+                                    for (Employee obj : employeeList) {
+                                        obj.showData();
+                                    }
+                                } else {
+                                    System.out.println("Phòng ban này có thể xoá!");
+//                                    Department department = new Department();
+//                                    department.setDepartmentId(deptId);
+//                                    ManagementDepartment managementDepartment = new ManagementDepartment(department);
+//                                    managementDepartment.removeEmployeeByDeptID();
+                                }
 
                             }
                             if (optionDept == 5) {

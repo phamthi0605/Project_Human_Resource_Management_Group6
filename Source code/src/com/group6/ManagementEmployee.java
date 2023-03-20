@@ -186,37 +186,6 @@ public class ManagementEmployee {
 
     }
 
-    public ResultSet getEmployeeByDepatID() {
-        Connection con = null;
-        DBContext db = new DBContext();
-        con = db.getConnection();
-        ResultSet result = null;
-        try {
-            Statement sm = con.createStatement();
-            result = sm.executeQuery("SELECT department_name,\n" +
-                    "COUNT(*) AS 'Number of Employees' \n" +
-                    "FROM department \n" +
-                    "INNER JOIN employee \n" +
-                    "ON employee.department_id = department.id \n" +
-                    "GROUP BY department.id,  department_name");
-
-            if (result.next() == false) {
-                System.out.println("Data empty!");
-            } else {
-                System.out.printf("%-18s%-25s\n", "Department name", "Number of employees");
-                do {
-                    String name = result.getString(1);
-                    int count = result.getInt(2);
-                    System.out.printf("%-25s%-10d\n", name, count);
-                } while (result.next());
-            }
-        } catch (SQLException e) {
-            e.getMessage();
-        }
-
-        return result;
-    }
-
     public List<Employee> getListEmployee() {
         List<Employee> list = new ArrayList<>();
         Connection con = null;
@@ -254,6 +223,47 @@ public class ManagementEmployee {
         return list;
     }
 
+    public List<Employee> getListEmployeeByDeptId() {
+        List<Employee> list = new ArrayList<>();
+        Connection con = null;
+        DBContext db = new DBContext();
+        con = db.getConnection();
+        ResultSet rs = null;
+        try {
+            PreparedStatement ptm = con.prepareStatement("SELECT * FROM employee\n" +
+                    "WHERE department_id =?");
+            // set value for parameter of sql statement
+            ptm.setInt(1, employee.getDepartment_id());
+            rs = ptm.executeQuery();
+            if (rs.next() == false) {
+                System.out.println("Bộ phận này không có nhân viên!");
+            } else {
+                do {
+                    Employee employee = new Employee(
+                            rs.getString("employee_id"),
+                            rs.getString("full_name"),
+                            rs.getString("position"),
+                            rs.getInt("age"),
+                            rs.getString("phone"),
+                            rs.getString("email"),
+                            rs.getFloat("salary"),
+                            rs.getFloat("person_Income_Tax"),
+                            rs.getString("hire_date"),
+                            rs.getString("end_date"),
+                            rs.getInt("department_id"),
+                            rs.getString("is_manager"));
+                    list.add(employee);
+                } while (rs.next());
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
     //Get list employee find by id
     public List<Employee> getListEmployeeById(List<Employee> ls, String employeeID) {
         List<Employee> getList = new ArrayList<>();
@@ -266,4 +276,6 @@ public class ManagementEmployee {
     }
 
 
+    public void getEmployeeByDepatID() {
+    }
 }
