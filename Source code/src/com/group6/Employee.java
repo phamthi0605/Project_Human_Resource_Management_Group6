@@ -1,9 +1,10 @@
 package com.group6;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Employee {
-    private int employee_id;
+    // private int id;
+    private String employee_id;
     private String fullName;
     private String position;
     private int age;
@@ -20,7 +21,23 @@ public class Employee {
 
     }
 
-    public Employee(int employeeId, String fullName, String position, String email,
+    public Employee(String employee_id, String fullName, String position, int age, String phoneNumber, String email, float salary, float person_Income_Tax,
+                    String hire_date, String endDate, int department_id, String is_manager) {
+        this.employee_id = employee_id;
+        this.fullName = fullName;
+        this.position = position;
+        this.age = age;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.salary = salary;
+        this.person_Income_Tax = person_Income_Tax;
+        this.hire_date = hire_date;
+        this.endDate = endDate;
+        this.department_id = department_id;
+        this.is_manager = is_manager;
+    }
+
+    public Employee(String employeeId, String fullName, String position, String email,
                     float salary, float tax, String hireDate, int deptID, String isManager) {
         this.employee_id = employeeId;
         this.fullName = fullName;
@@ -33,7 +50,8 @@ public class Employee {
         this.is_manager = isManager;
     }
 
-    public Employee(int employee_id, String fullName, String position, int age,
+
+    public Employee(String employee_id, String fullName, String position, int age,
                     String phoneNumber, String email, float salary, float person_Income_Tax,
                     String hire_date, int department_id, String is_manager) {
         this.employee_id = employee_id;
@@ -49,11 +67,12 @@ public class Employee {
         this.is_manager = is_manager;
     }
 
-    public int getEmployee_id() {
+
+    public String getEmployee_id() {
         return employee_id;
     }
 
-    public void setEmployee_id(int employee_id) {
+    public void setEmployee_id(String employee_id) {
         this.employee_id = employee_id;
     }
 
@@ -155,21 +174,8 @@ public class Employee {
         this.endDate = endDate;
     }
 
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "employee_id=" + employee_id +
-                ", fullName='" + fullName + '\'' +
-                ", position='" + position + '\'' +
-                ", age=" + age +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", email='" + email + '\'' +
-                ", salary=" + salary +
-                ", person_Income_Tax=" + person_Income_Tax +
-                ", hire_date='" + hire_date + '\'' +
-                ", endDate='" + endDate + '\'' +
-                ", department_id=" + department_id +
-                ", is_manager='" + is_manager + '\'' +
-                '}';
+
+    public void showData() {
+        System.out.printf("%-15s%-20s%-15s%-10d%-16s%-25s%-20f%-20f%-16d%-15s\n", employee_id, fullName, position, age, phoneNumber, email, salary, person_Income_Tax, department_id, is_manager);
     }
 }

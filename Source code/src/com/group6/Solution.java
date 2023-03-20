@@ -4,13 +4,14 @@ import java.lang.reflect.AccessibleObject;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 import java.util.SimpleTimeZone;
 
 public class Solution {
     static Scanner scanner = new Scanner(System.in);
     static ManagementEmployee managementEmployee = new ManagementEmployee();
-    //static ManagementEmployee account = new ManagementEmployee(new Admin("thipt1", "1234"));
+
 
     public static void main(String[] args) {
 
@@ -34,10 +35,20 @@ public class Solution {
             Admin admin = new Admin(userName, password);
             ManagementEmployee manageAccount = new ManagementEmployee(admin);
             boolean statusLogin = manageAccount.login();
-
-            if (!statusLogin) {
-                System.out.println("Đăng nhập thất bại!");
-            } else {
+            while (!statusLogin) {
+                System.out.println("Đăng nhập lại");
+                System.out.println("Nhập username: ");
+                userName = scanner.nextLine();
+                System.out.println("Nhập password: ");
+                password = scanner.nextLine();
+                admin = new Admin(userName, password);
+                manageAccount = new ManagementEmployee(admin);
+                statusLogin = manageAccount.login();
+                if (statusLogin) {
+                    break;
+                }
+            }
+            if (statusLogin) {
                 System.out.println("Đăng nhập thành công!");
                 while (true) {
                     menuProgram();
@@ -55,86 +66,115 @@ public class Solution {
                             }
                             if (subOption == 1) {
                                 System.out.println("Hiển thị danh sách nhân viên");
-                                managementEmployee.getEmployee();
+                                List<Employee> employeeList = managementEmployee.getListEmployee();
+                                System.out.printf("%-15s%-20s%-15s%-10s%-16s%-25s%-20s%-20s%-16s%-10s\n", "EmployeeID", "FullName", "Position", "Age", "Phone", "Email", "Salary", "Tax", "DepartmentID", "IsManager");
+                                for (Employee employee : employeeList) {
+                                    employee.showData();
+                                }
                             }
                             if (subOption == 2) {
-                                Employee employee = new Employee();
-                                System.out.println("Thêm nhân viên mới");
-                                System.out.println("Mã nhân viên: ");
-                                int employeeId = Integer.parseInt(scanner.nextLine());
-                                System.out.println("Họ và tên: ");
-                                String fullName = scanner.nextLine();
-                                System.out.println("Vị trí: ");
-                                String position = scanner.nextLine();
-                                System.out.println("Email: ");
-                                String email = scanner.nextLine();
-                                System.out.println("Lương: ");
-                                float salary = Float.parseFloat(scanner.nextLine());
-                                // tính thuế
-                                employee.setPerson_Income_Tax(salary);
-                                float tax = employee.getPerson_Income_Tax();
-                                // lấy currentDate
-                                Date date = new Date();
-                                SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
-                                String hireDate = formatDate.format(date);
-                                // nhập phòng ban cho nhân viên
-                                System.out.println("Mã phòng ban: (1. HR), (2. Sale), (3. Accounting),(4. Dev):");
-                                int deptId = Integer.parseInt(scanner.nextLine());
-                                // nhập quản lý cho nhân viên
-                                System.out.println("Quản lý của nhân viên: ");
-                                String deptManagerID = scanner.nextLine();
-                                String isManager = null;
-                                if (deptManagerID.equals("y")) {
-                                    isManager = "'1'";
+                                List<Employee> employeeList = managementEmployee.getListEmployee();
+                                while (true) {
+                                    Employee employee = new Employee();
+                                    System.out.println("Thêm nhân viên mới");
+                                    System.out.println("Mã nhân viên: ");
+                                    String employeeId = scanner.nextLine();
+                                    System.out.println("Họ và tên: ");
+                                    String fullName = scanner.nextLine();
+                                    if (!Validation.checkEmployeeById(employeeList, employeeId, fullName)) {
+                                        System.err.println("Employee id has exist . Pleas re-input.");
+                                        continue;
+                                    }
+                                    System.out.println("Vị trí: ");
+                                    String position = scanner.nextLine();
+                                    System.out.println("Email: ");
+                                    String email = scanner.nextLine();
+                                    System.out.println("Lương: ");
+                                    float salary = Float.parseFloat(scanner.nextLine());
+                                    // tính thuế
+                                    employee.setPerson_Income_Tax(salary);
+                                    float tax = employee.getPerson_Income_Tax();
+                                    // lấy currentDate
+                                    Date date = new Date();
+                                    SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
+                                    String hireDate = formatDate.format(date);
+                                    // nhập phòng ban cho nhân viên
+                                    System.out.println("Mã phòng ban: (1. HR), (2. Sale), (3. Accounting),(4. Dev):");
+                                    int deptId = Integer.parseInt(scanner.nextLine());
+                                    // nhập quản lý cho nhân viên
+                                    System.out.println("Quản lý của nhân viên: ");
+                                    String deptManagerID = scanner.nextLine();
+                                    String isManager = null;
+                                    if (deptManagerID.equals("y")) {
+                                        isManager = "'1'";
+                                    }
+                                    employee = new Employee(employeeId, fullName, position, email, salary, tax, hireDate, deptId, isManager);
+                                    if (Validation.checkemployeeExist(employeeList, employeeId, email)) {
+                                        ManagementEmployee managementEmployee = new ManagementEmployee(employee);
+                                        managementEmployee.addEmployee();
+                                        break;
+                                    }
+                                    System.err.println("Add employee duplicate.");
                                 }
-                                employee = new Employee(employeeId, fullName, position, email, salary, tax, hireDate, deptId, isManager);
-                                ManagementEmployee managementEmployee = new ManagementEmployee(employee);
-                                //System.out.println(employee);
-                                managementEmployee.addEmployee();
+
                             }
                             if (subOption == 3) {
-                                Employee employeeUpdate = new Employee();
-                                System.out.println("Cập nhật thông tin nhân viên");
-                                System.out.println("Nhập mã nhân viên cần cập nhật: ");
-                                int employeeId = Integer.parseInt(scanner.nextLine());
-                                System.out.println("Họ và tên: ");
-                                String fullName = scanner.nextLine();
-                                System.out.println("Vị trí: ");
-                                String position = scanner.nextLine();
-                                System.out.println("Tuổi: ");
-                                int age = Integer.parseInt(scanner.nextLine());
-                                System.out.println("Phone number: ");
-                                String phoneNumber = scanner.nextLine();
-                                System.out.println("Email: ");
-                                String email = scanner.nextLine();
-                                System.out.println("Lương: ");
-                                float salary = Float.parseFloat(scanner.nextLine());
-                                // tính thuế
-                                employeeUpdate.setPerson_Income_Tax(salary);
-                                float tax = employeeUpdate.getPerson_Income_Tax();
-                                // lấy currentDate
-                                Date date = new Date();
-                                SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
-                                String hireDate = formatDate.format(date);
-                                // nhập phòng ban cho nhân viên
-                                System.out.println("Mã phòng ban: (1. HR), (2. Sale), (3. Accounting),(4. Dev):");
-                                int deptId = Integer.parseInt(scanner.nextLine());
-                                // nhập quản lý cho nhân viên
-                                System.out.println("Quản lý của nhân viên: ");
-                                String deptManagerID = scanner.nextLine();
-                                String isManager = null;
-                                if (deptManagerID.equals("y")) {
-                                    isManager = "'1'";
+                                List<Employee> employeeList = managementEmployee.getListEmployee();
+                                while (true) {
+                                    Employee employeeUpdate = new Employee();
+                                    System.out.println("Cập nhật thông tin nhân viên");
+                                    System.out.println("Nhập mã nhân viên cần cập nhật: ");
+                                    String employeeId = scanner.nextLine();
+                                    System.out.println("Họ và tên: ");
+                                    String fullName = scanner.nextLine();
+                                    if (!Validation.checkEmployeeById(employeeList, employeeId, fullName)) {
+                                        System.err.println("Employee id has exist . Pleas re-input.");
+                                        continue;
+                                    }
+                                    System.out.println("Vị trí: ");
+                                    String position = scanner.nextLine();
+                                    System.out.println("Tuổi: ");
+                                    int age = Integer.parseInt(scanner.nextLine());
+                                    System.out.println("Phone number: ");
+                                    String phoneNumber = scanner.nextLine();
+                                    System.out.println("Email: ");
+                                    String email = scanner.nextLine();
+                                    System.out.println("Lương: ");
+                                    float salary = Float.parseFloat(scanner.nextLine());
+                                    // tính thuế
+                                    employeeUpdate.setPerson_Income_Tax(salary);
+                                    float tax = employeeUpdate.getPerson_Income_Tax();
+                                    // lấy currentDate
+                                    Date date = new Date();
+                                    SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
+                                    String hireDate = formatDate.format(date);
+                                    // nhập phòng ban cho nhân viên
+                                    System.out.println("Mã phòng ban: (1. HR), (2. Sale), (3. Accounting),(4. Dev):");
+                                    int deptId = Integer.parseInt(scanner.nextLine());
+                                    // nhập quản lý cho nhân viên
+                                    System.out.println("Quản lý của nhân viên: ");
+                                    String deptManagerID = scanner.nextLine();
+                                    String isManager = null;
+                                    if (deptManagerID.equals("y")) {
+                                        isManager = "'1'";
+                                    }
+                                    employeeUpdate = new Employee(employeeId, fullName, position, age, phoneNumber, email, salary, tax, hireDate, deptId, isManager);
+                                    if (Validation.checkemployeeExist(employeeList, employeeId, email)) {
+                                        ManagementEmployee managementEmployee = new ManagementEmployee(employeeUpdate);
+                                        managementEmployee.updateEmployee();
+                                        break;
+                                    }
+                                    System.err.println("Update employee duplicate.");
+
+
                                 }
-                                employeeUpdate = new Employee(employeeId, fullName, position, age, phoneNumber, email, salary, tax, hireDate, deptId, isManager);
-                                ManagementEmployee managementEmployee = new ManagementEmployee(employeeUpdate);
-                                managementEmployee.updateEmployee();
-                                break;
+
+
                             }
                             if (subOption == 4) {
                                 System.out.println("Xoá nhân viên");
                                 System.out.println("Please enter employee id to remove:");
-                                int employeeId = scanner.nextInt();
+                                String employeeId = scanner.nextLine();
                                 Employee employee = new Employee();
                                 employee.setEmployee_id(employeeId);
                                 ManagementEmployee manage = new ManagementEmployee(employee);
@@ -144,7 +184,7 @@ public class Solution {
                                 System.out.println("Tìm kiếm nhân viên theo bất kì mã, tên, số điện thoại hoặc email: ");
                                 Employee searchEmp = new Employee();
                                 System.out.println("Nhập mã nhân viên muốn tìm kiếm: ");
-                                int employeeID = Integer.parseInt(scanner.nextLine());
+                                String employeeID = scanner.nextLine();
                                 searchEmp.setEmployee_id(employeeID);
                                 System.out.println("Nhập tên nhân viên muốn tìm kiếm: ");
                                 String fullName = scanner.nextLine();
@@ -215,7 +255,7 @@ public class Solution {
                             if (optionDept == 5) {
                                 System.out.println("Xoá nhân viên từ phòng ban");
                                 System.out.println("Nhập mã nhân viên cần xoá: ");
-                                int employeeID = scanner.nextInt();
+                                String employeeID = scanner.nextLine();
                                 Employee employee = new Employee();
                                 employee.setEmployee_id(employeeID);
                                 ManagementDepartment manage = new ManagementDepartment(employee);

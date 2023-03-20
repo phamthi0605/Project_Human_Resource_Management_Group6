@@ -161,7 +161,7 @@ public class ManagementDepartment {
             con = db.getConnection();
 
             PreparedStatement sm = con.prepareStatement(sql);
-            sm.setInt(1, employee.getEmployee_id());
+            sm.setString(1, employee.getEmployee_id());
             sm.executeUpdate();
             System.out.println("Delete successfully!");
         } catch (SQLException e) {

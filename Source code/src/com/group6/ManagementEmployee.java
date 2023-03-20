@@ -3,7 +3,9 @@ package com.group6;
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class ManagementEmployee {
@@ -104,7 +106,7 @@ public class ManagementEmployee {
             psmt.setInt(9, employee.getDepartment_id());
             psmt.setString(10, employee.getIs_manager());
 
-            psmt.setInt(11, employee.getEmployee_id());
+            psmt.setString(11, employee.getEmployee_id());
 
             psmt.executeUpdate();
             int count = psmt.executeUpdate();
@@ -133,55 +135,14 @@ public class ManagementEmployee {
             con = db.getConnection();
 
             PreparedStatement sm = con.prepareStatement(sql);
-            sm.setInt(1, employee.getEmployee_id());
+            sm.setString(1, employee.getEmployee_id());
             sm.executeUpdate();
             System.out.println("Delete successfully!");
         } catch (SQLException e) {
             e.getMessage();
         }
     }
-
-    /**
-     * Get employee from database
-     *
-     * @return record from table employee in database
-     */
-    public ResultSet getEmployee() {
-        Connection con = null;
-        DBContext db = new DBContext();
-        con = db.getConnection();
-        ResultSet result = null;
-        try {
-            Statement sm = con.createStatement();
-            result = sm.executeQuery("select * from employee");
-            if (result.next() == false) {
-                System.out.println("Data empty!");
-            } else {
-                System.out.printf("%-8s%-15s%-20s%-15s%-10s%-16s%-25s%-20s%-20s%-10s\n", "ID", "EmployeeID", "FullName", "Position", "Age", "Phone", "Email", "Salary", "Tax", "DepartmentID");
-                do {
-                    int id = result.getInt("id");
-                    String employeeId = result.getString("employee_id");
-                    String fullName = result.getString("full_name");
-                    String position = result.getString("position");
-                    int age = result.getInt("age");
-                    String phoneNumber = result.getString("phone");
-                    String email = result.getString("email");
-                    float salary = result.getFloat("salary");
-                    float tax = result.getFloat("person_Income_Tax");
-//                    Date hireDate = result.getDate("hire_date");
-//                    Date endDate = result.getDate("end_date");
-                    int deptID = result.getInt("department_id");
-                    System.out.printf("%-8d%-15s%-20s%-15s%-10d%-16s%-25s%-20f%-20f%-10d\n", id, employeeId, fullName, position, age, phoneNumber, email, salary, tax, deptID);
-
-                }
-                while (result.next());
-            }
-        } catch (SQLException e) {
-            e.getMessage();
-        }
-
-        return result;
-    }
+    
 
     public ResultSet searchEmployee() {
         Connection con = null;
@@ -190,7 +151,7 @@ public class ManagementEmployee {
         ResultSet result = null;
         try {
             PreparedStatement ptm = con.prepareStatement("select * from employee where employee_id = ? or full_name =? or phone=? or email=? ");
-            ptm.setInt(1, employee.getEmployee_id());
+            ptm.setString(1, employee.getEmployee_id());
             ptm.setString(2, employee.getFullName());
             ptm.setString(3, employee.getPhoneNumber());
             ptm.setString(4, employee.getEmail());
@@ -212,7 +173,7 @@ public class ManagementEmployee {
 //                    Date hireDate = result.getDate("hire_date");
 //                    Date endDate = result.getDate("end_date");
                     int deptID = result.getInt("department_id");
-                    System.out.printf("%-8d%-15s%-20s%-15s%-10d%-16s%-25s%-20f%-20f%-10d\n", id, employeeId, fullName, position, age, phoneNumber, email, salary, tax, deptID);
+                    System.out.printf("%-8s%-15s%-20s%-15s%-10d%-16s%-25s%-20f%-20f%-10d\n", id, employeeId, fullName, position, age, phoneNumber, email, salary, tax, deptID);
 
                 }
                 while (result.next());
@@ -256,4 +217,40 @@ public class ManagementEmployee {
         return result;
     }
 
+    public List<Employee> getListEmployee() {
+        List<Employee> list = new ArrayList<>();
+        Connection con = null;
+        DBContext db = new DBContext();
+        con = db.getConnection();
+        Statement sm = null;
+        try {
+            sm = con.createStatement();
+            ResultSet rs = sm.executeQuery("select * from employee");
+            if (!rs.next()) {
+                System.out.println("Data empty!");
+            } else {
+                do {
+                    Employee employee = new Employee(
+                            rs.getString("employee_id"),
+                            rs.getString("full_name"),
+                            rs.getString("position"),
+                            rs.getInt("age"),
+                            rs.getString("phone"),
+                            rs.getString("email"),
+                            rs.getFloat("salary"),
+                            rs.getFloat("person_Income_Tax"),
+                            rs.getString("hire_date"),
+                            rs.getString("end_date"),
+                            rs.getInt("department_id"),
+                            rs.getString("is_manager")
+                    );
+                    list.add(employee);
+                } while (rs.next());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 }
