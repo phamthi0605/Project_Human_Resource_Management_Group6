@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class ManagementDepartment {
     Department department;
+    Employee employee;
 
     public ManagementDepartment() {
 
@@ -12,6 +13,10 @@ public class ManagementDepartment {
 
     public ManagementDepartment(Department dept) {
         this.department = dept;
+    }
+
+    public ManagementDepartment(Employee employee) {
+        this.employee = employee;
     }
 
     /**
@@ -97,7 +102,70 @@ public class ManagementDepartment {
         }
     }
 
-    public void removeDepartment() {
+//    public int getEmployeeByDeptID() {
+//        int count = 0;
+//        Connection con = null;
+//        DBContext db = new DBContext();
+//        con = db.getConnection();
+//        int value = 0;
+//        ResultSet rs;
+//        try {
+//            String sql = "SELECT count(department_id) AS NoDept\n" +
+//                    "FROM employee\n" +
+//                    "GROUP BY department_id\n" +
+//                    "HAVING department_id =?";
+//            PreparedStatement sm = con.prepareStatement(sql);
+//            sm.setInt(1, department.getDepartmentId());
+//            sm.executeUpdate();
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return value;
+//    }
+//
+//    public void removeDepartment() {
+//        Scanner scanner = new Scanner(System.in);
+//        Connection con = null;
+//        DBContext db = new DBContext();
+//        con = db.getConnection();
+//        try {
+//            int isCheck = getDepartmentByID();
+//            if (isCheck > 0) {
+//                System.out.println("Không thể xoá department");
+//            } else {
+//                String sql = "DELETE from department WHERE id = ?";
+//                PreparedStatement sm = con.prepareStatement(sql);
+//                System.out.println("Please enter employee to remove:");
+//                int deptID = scanner.nextInt();
+//                sm.setInt(1, deptID);
+//                sm.executeUpdate();
+//                int result = sm.executeUpdate();
+//                if (result > 0) {
+//                    System.out.println("Delete department successfully!");
+//                } else {
+//                    System.out.println("Delete department failed!");
+//                }
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
+    public void removeEmployeeByDeptID() {
+        Scanner scanner = new Scanner(System.in);
+        String sql = "DELETE from employee WHERE id = ?";
+        try {
+            Connection con = null;
+            DBContext db = new DBContext();
+            con = db.getConnection();
+
+            PreparedStatement sm = con.prepareStatement(sql);
+            sm.setInt(1, employee.getEmployee_id());
+            sm.executeUpdate();
+            System.out.println("Delete successfully!");
+        } catch (SQLException e) {
+            e.getMessage();
+        }
     }
 }

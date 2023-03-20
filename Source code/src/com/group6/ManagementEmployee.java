@@ -133,9 +133,7 @@ public class ManagementEmployee {
             con = db.getConnection();
 
             PreparedStatement sm = con.prepareStatement(sql);
-            System.out.println("Please enter employee id to remove:");
-            int employeeId = scanner.nextInt();
-            sm.setInt(1, employeeId);
+            sm.setInt(1, employee.getEmployee_id());
             sm.executeUpdate();
             System.out.println("Delete successfully!");
         } catch (SQLException e) {
@@ -226,4 +224,36 @@ public class ManagementEmployee {
         return result;
 
     }
+
+    public ResultSet getEmployeeByDepatID() {
+        Connection con = null;
+        DBContext db = new DBContext();
+        con = db.getConnection();
+        ResultSet result = null;
+        try {
+            Statement sm = con.createStatement();
+            result = sm.executeQuery("SELECT department_name,\n" +
+                    "COUNT(*) AS 'Number of Employees' \n" +
+                    "FROM department \n" +
+                    "INNER JOIN employee \n" +
+                    "ON employee.department_id = department.id \n" +
+                    "GROUP BY department.id,  department_name");
+
+            if (result.next() == false) {
+                System.out.println("Data empty!");
+            } else {
+                System.out.printf("%-18s%-25s\n", "Department name", "Number of employees");
+                do {
+                    String name = result.getString(1);
+                    int count = result.getInt(2);
+                    System.out.printf("%-25s%-10d\n", name, count);
+                } while (result.next());
+            }
+        } catch (SQLException e) {
+            e.getMessage();
+        }
+
+        return result;
+    }
+
 }
