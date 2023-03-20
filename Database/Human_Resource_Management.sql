@@ -12,7 +12,8 @@ INSERT INTO department(department_name, address)
 VALUES
 		('HR', '1 floor'),
 		('Sale', '2 floor'),
-		('Accounting', '3 floor');
+		('Accounting', '3 floor'),
+		('Dev', '4 floor');
 
 		
 
@@ -38,12 +39,12 @@ CREATE TABLE employee(
 
 INSERT INTO employee(employee_id, full_name, position, age, phone, email, salary, hire_date, end_date)
 VALUES
-		('1', 'Pham Thi Thi', 'developer', 24, '0123456789', 'thipt1@gmail.com', 10000000, '2019-02-12', NULL),
-		('2', 'Nguyen Thi Hoa', 'Kế toán', 26, '', 'hoant123@gmail.com',8500000, '2021-03-12', NULL),  
-		('3', 'Tran Thi Nga', 'tester', 25, '076721783', 'ngatran12@gmail.com',9000000, '2020-03-12', NULL),
-		('4', 'Tran Van Tien', 'Kế toán trưởng', 34, '0129384756', 'tiennv1@gmail.com',19000000, '2021-03-12', NULL),
-		('5', 'Nguyen Van Viet', 'Kế toán', 23, '0129875678', 'vietnt14@gmail.com',8500000, '2021-03-12', NULL),
-		('6', 'Nguyen Thi Hoa', 'Kế toán', 26, '', 'hoant123@gmail.com',8500000, '2021-03-12', NULL);
+		('1', 'Pham Thi Thi', 'developer', 24, '1', 'thipt1@gmail.com', 10000000, '2019-02-12', NULL),
+		('2', 'Nguyen Thi Hoa', 'Kế toán', 26, '2', 'hoant123@gmail.com',8500000, '2021-03-12', NULL),  
+		('3', 'Tran Thi Nga', 'tester', 25, '3', 'ngatran12@gmail.com',9000000, '2020-03-12', NULL),
+		('4', 'Tran Van Tien', 'Kế toán trưởng', 34, '4', 'tiennv1@gmail.com',19000000, '2021-03-12', null),
+		('5', 'Nguyen Van Viet', 'Kế toán', 23, '5', 'vietnt14@gmail.com',8500000, '2021-03-12', NULL),
+		('6', 'Nguyen Thi Trang', 'Kế toán', 26, '6', 'trang@gmail.com',8500000, '2021-03-12', NULL);
 	
 
 
