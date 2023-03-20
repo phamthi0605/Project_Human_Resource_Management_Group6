@@ -335,10 +335,15 @@ public class Solution {
                                     }
                                 } else {
                                     System.out.println("Phòng ban này có thể xoá!");
-//                                    Department department = new Department();
-//                                    department.setDepartmentId(deptId);
-//                                    ManagementDepartment managementDepartment = new ManagementDepartment(department);
-//                                    managementDepartment.removeEmployeeByDeptID();
+                                    Department department = new Department();
+                                    department.setDepartmentId(deptId);
+                                    ManagementDepartment managementDepartment = new ManagementDepartment(department);
+                                    managementDepartment.removeEmployeeByDeptID();
+                                    List<Department> departmentList = managementDepartment.getListDepartment();
+                                    System.out.printf("%-10s%-21s%-13s\n", "ID", "Department Name", "Address");
+                                    for (Department show : departmentList) {
+                                        show.showData();
+                                    }
                                 }
 
                             }
