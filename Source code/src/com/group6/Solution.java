@@ -138,11 +138,12 @@ public class Solution {
                                     } else {
                                         // getListEmployeeFound: In ra employee tìm thấy theo employeeID
                                         // Employee employee = managementEmployee.getListEmployeeFound(listFindEmployee);
+                                        System.out.println("Kết quả tìm kiếm: ");
                                         System.out.printf("%-15s%-20s%-15s%-10s%-16s%-25s%-20s%-20s%-16s%-10s\n", "EmployeeID", "FullName", "Position", "Age", "Phone", "Email", "Salary", "Tax", "DepartmentID", "IsManager");
                                         for (Employee employee : listFindEmployee) {
                                             employee.showData();
                                         }
-                                        System.out.print("Do you want to update (U) employee: ");
+                                        System.out.print("Do you want to update (U/N) employee: ");
                                         if (Validation.checkInputUD()) {
                                             System.out.println("Họ và tên: ");
                                             String fullName = scanner.nextLine();
@@ -187,6 +188,8 @@ public class Solution {
                                                 employeeUpdate = new Employee(employeeId, fullName, position, age, phoneNumber, email, salary, tax, hireDate, deptId, isManager);
                                                 ManagementEmployee managementEmployee = new ManagementEmployee(employeeUpdate);
                                                 managementEmployee.updateEmployee();
+                                                System.out.println("Dữ liệu employee sau khi update: ");
+                                                employeeUpdate.showData();
                                                 break;
                                             }
 
@@ -266,37 +269,61 @@ public class Solution {
                                     department.setDepartmentId(deptID);
                                     department.setDepartmentName(deptName);
                                     department.setAddress(address);
-                                    if (Validation.checkDepartment(departmentList, deptID, deptName)) {
-                                        ManagementDepartment management = new ManagementDepartment(department);
-                                        management.addDepartment();
-                                        break;
-                                    }
+                                    //add department
+                                    ManagementDepartment management = new ManagementDepartment(department);
+                                    management.addDepartment();
+                                    break;
 
                                 }
                             }
                             if (optionDept == 3) {
+                                List<Department> departmentList = managementDepartment.getListDepartment();
                                 System.out.println("Cập nhật phòng ban");
                                 System.out.println("Nhập mã phòng ban cần cập nhật: ");
                                 int deptId = Integer.parseInt(scanner.nextLine());
-                                System.out.println("Tên phòng ban:");
-                                String deptNameUpdate = scanner.nextLine();
-                                System.out.println("Địa chỉ: ");
-                                String addressUpdate = scanner.nextLine();
-                                Department department = new Department(deptId, deptNameUpdate, addressUpdate);
-                                ManagementDepartment management = new ManagementDepartment(department);
-                                management.updateDepartment();
+                                List<Department> listFindDeptByID = managementDepartment.getListDepartmentById(departmentList, deptId);
+                                if (listFindDeptByID.isEmpty()) {
+                                    System.err.println("Not found department.");
+                                    continue;
+                                } else {
+                                    System.out.println("Kết quả tìm kiếm là: ");
+                                    System.out.printf("%-20s%-21s%-13s\n", "DepartmentId", "DepartmentName", "Address");
+                                    for (Department department : listFindDeptByID) {
+                                        department.showData();
+                                    }
+                                    System.out.print("Do you want to update (U/N) employee: ");
+                                    if (Validation.checkInputUD()) {
+                                        System.out.println("Tên phòng ban:");
+                                        String deptNameUpdate = scanner.nextLine();
+                                        System.out.println("Địa chỉ: ");
+                                        String addressUpdate = scanner.nextLine();
+                                        //check employee change or not
+                                        if (!Validation.checkchangeInforDepartment(listFindDeptByID.get(0), deptId, deptNameUpdate, addressUpdate)) {
+                                            System.err.println("Nothing change.");
+                                        }
+                                        System.out.println("Dữ liệu department trước khi update: ");
+                                        System.out.printf("%-20s%-21s%-13s\n", "DepartmentId", "DepartmentName", "Address");
+                                        for (Department department : listFindDeptByID) {
+                                            department.showData();
+                                        }
+                                        //update department
+                                        Department department = new Department(deptId, deptNameUpdate, addressUpdate);
+                                        ManagementDepartment managementEmployee = new ManagementDepartment(department);
+                                        managementEmployee.updateDepartment();
+                                        System.out.println("Dữ liệu department sau khi update: ");
+                                        department.showData();
+                                        break;
+                                    }
+                                }
+
                             }
                             if (optionDept == 4) {
+                                System.out.println("Xoá phòng ban");
 
                             }
                             if (optionDept == 5) {
                                 System.out.println("Xoá nhân viên từ phòng ban");
-                                System.out.println("Nhập mã nhân viên cần xoá: ");
-                                String employeeID = scanner.nextLine();
-                                Employee employee = new Employee();
-                                employee.setEmployee_id(employeeID);
-                                ManagementDepartment manage = new ManagementDepartment(employee);
-                                manage.removeEmployeeByDeptID();
+
                             }
                             if (optionDept == 6) {
                                 // Có trong thực hiện update thông tin nhân viên

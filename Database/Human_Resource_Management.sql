@@ -61,25 +61,3 @@ VALUES
 	('phamthi', 'thipt1', '1234');
 		
 
-
-		
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-department

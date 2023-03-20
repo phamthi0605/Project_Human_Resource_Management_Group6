@@ -46,7 +46,11 @@ public class Validation {
             if (result.equalsIgnoreCase("U")) {
                 return true;
             }
-            System.err.println("Please input u/U :");
+            //return false if user input n/N
+            if (result.equalsIgnoreCase("N")) {
+                return false;
+            }
+            System.err.println("Please input u/U or n/N.");
             System.out.print("Enter again: ");
         }
     }
@@ -120,5 +124,23 @@ public class Validation {
         return true;
     }
 
+    /**
+     * Kiểm tra dữ liệu nhập vào có bị trùng với giá trị cũ của department ko
+     *
+     * @param department      : giá trị của 1 bộ phận cũ
+     * @param deptId          : mã phòng ban
+     * @param deptNameUpdate: thay đổi tên phòng ban
+     * @param addressUpdate   : thay đổi địa chỉ phòng ban
+     * @return : true nếu giá trị không trùng với department cũ
+     */
 
+    public static boolean checkchangeInforDepartment(Department department, int deptId, String deptNameUpdate, String addressUpdate) {
+        if (deptId == department.getDepartmentId()
+                && deptNameUpdate.equalsIgnoreCase(department.getDepartmentName())
+                && addressUpdate.equalsIgnoreCase(department.getAddress())
+        ) {
+            return false;
+        }
+        return true;
+    }
 }

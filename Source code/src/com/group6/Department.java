@@ -41,6 +41,6 @@ public class Department {
 
 
     public void showData() {
-        System.out.printf("%-10d%-21s%-13s\n", departmentId, departmentName, address);
+        System.out.printf("%-20d%-21s%-13s\n", departmentId, departmentName, address);
     }
 }
