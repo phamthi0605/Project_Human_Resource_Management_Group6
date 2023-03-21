@@ -187,9 +187,10 @@ public class Solution {
                                                 if (Validation.checkemployeeExist(employeeList, employeeId, email)) {
                                                     employeeUpdate = new Employee(employeeId, fullName, position, age, phoneNumber, email, salary, tax, hireDate, deptId, isManager);
                                                     ManagementEmployee managementEmployee = new ManagementEmployee(employeeUpdate);
-                                                    managementEmployee.updateEmployee();
                                                     System.out.println("Dữ liệu employee sau khi update: ");
-                                                    employeeUpdate.showData();
+                                                    managementEmployee.updateEmployee();
+
+                                                    // employeeUpdate.showData();
                                                     break;
                                                 }
 

@@ -176,6 +176,6 @@ public class Employee {
 
 
     public void showData() {
-        System.out.printf("%-15s%-20s%-15s%-10d%-16s%-25s%-20f%-20f%-16d%-15s\n", employee_id, fullName, position, age, phoneNumber, email, salary, person_Income_Tax, department_id, is_manager);
+        System.out.printf("%-15s%-20s%-15s%-10d%-16s%-25s%-20.2f%-20.2f%-16d%-15s\n", employee_id, fullName, position, age, phoneNumber, email, salary, person_Income_Tax, department_id, is_manager);
     }
 }
