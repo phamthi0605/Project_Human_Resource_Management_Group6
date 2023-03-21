@@ -363,7 +363,15 @@ public class Solution {
                                     ManagementEmployee managementEmployee = new ManagementEmployee(employee);
                                     List<Employee> listEmployee = managementEmployee.getListEmployeeByDeptId();
                                     if (listEmployee.size() > 0) {
+                                        System.out.printf("%-15s%-20s%-15s%-10s%-16s%-25s%-20s%-20s%-16s%-10s\n", "EmployeeID", "FullName", "Position", "Age", "Phone", "Email", "Salary", "Tax", "DepartmentID", "IsManager");
+                                        for (Employee emp : listEmployee) {
+                                            emp.showData();
+                                        }
                                         System.out.println("Nhập mã nhân viên mà bạn muốn xoá");
+                                        String empID = scanner.nextLine();
+                                        employee.setEmployee_id(empID);
+                                        ManagementEmployee deleteEmployeeId = new ManagementEmployee(employee);
+                                        deleteEmployeeId.removeEmployee();
                                     } else {
                                         System.out.println("Phòng ban " + deptId + " chưa có nhân viên nào!");
                                     }

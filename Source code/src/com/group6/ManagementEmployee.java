@@ -127,7 +127,6 @@ public class ManagementEmployee {
      * Remove employee by employee id
      */
     public void removeEmployee() {
-        Scanner scanner = new Scanner(System.in);
         String sql = "DELETE from employee WHERE employee_id = ?";
         try {
             Connection con = null;
