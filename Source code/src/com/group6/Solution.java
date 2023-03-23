@@ -1,16 +1,9 @@
 package com.group6;
 
-import java.lang.reflect.AccessibleObject;
-import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.Scanner;
 
 public class Solution {
     static Scanner scanner = new Scanner(System.in);
-    static ManagementEmployee managementEmployee = new ManagementEmployee();
-    static ManagementDepartment managementDepartment = new ManagementDepartment();
 
     public static void main(String[] args) {
 

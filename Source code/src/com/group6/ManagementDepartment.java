@@ -122,5 +122,41 @@ public class ManagementDepartment {
         return getListDept;
     }
 
+    public List<Employee> listEmployeeDeptIsNull() {
+        List<Employee> list = new ArrayList<>();
+        Connection con = null;
+        DBContext db = new DBContext();
+        con = db.getConnection();
+        try {
+            Statement sm = con.createStatement();
+            ResultSet rs = sm.executeQuery("SELECT * FROM employee\n" +
+                    "WHERE department_id IS NULL");
+            if (!rs.next()) {
+                System.out.println("Data empty!");
+            } else {
+                do {
+                    Employee employee = new Employee(
+                            rs.getString("employee_id"),
+                            rs.getString("full_name"),
+                            rs.getString("position"),
+                            rs.getInt("age"),
+                            rs.getString("phone"),
+                            rs.getString("email"),
+                            rs.getFloat("salary"),
+                            rs.getFloat("person_Income_Tax"),
+                            rs.getString("hire_date"),
+                            rs.getString("end_date"),
+                            rs.getInt("department_id"),
+                            rs.getString("is_manager")
+                    );
+                    list.add(employee);
+                } while (rs.next());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 
 }

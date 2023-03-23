@@ -88,9 +88,15 @@ public class FunctionDeapartment {
         //Hiển thị danh sách tất cả nhân viên trong 1 phòng ban : trả về 1 list
         // rồi kiểm tra xem list đó có nhân viên ko : nếu có thì in ra ko xoá department dc
         // nếu list ko có nhân viên thì thực hiện xoá
+        System.out.println("Danh sách các phòng ban");
+        List<Department> listDept = managementDepartment.getListDepartment();
+        System.out.printf("%-10s%-31s%-13s\n", "ID", "Department Name", "Address");
+        for (Department department : listDept) {
+            department.showData();
+        }
         Employee employee = new Employee();
         System.out.println("Nhập mã phòng ban: ");
-        int deptId = Validation.checkInputInt();
+        int deptId = ManagementEmployee.checkInputDepartment(Validation.checkInputInt());
         employee.setDepartment_id(deptId);
         ManagementEmployee managementEmployee = new ManagementEmployee(employee);
         List<Employee> employeeList = managementEmployee.getListEmployeeByDeptId();
@@ -119,9 +125,17 @@ public class FunctionDeapartment {
         System.out.println("Xoá nhân viên từ phòng ban");
         // Tìm kiếm những nhân viên cùng 1 phòng ban
         Employee employee = new Employee();
+        System.out.println("Danh sách các phòng ban");
+        List<Department> departmentList = managementDepartment.getListDepartment();
+        System.out.printf("%-10s%-31s%-13s\n", "ID", "Department Name", "Address");
+        for (Department department : departmentList) {
+            department.showData();
+        }
         System.out.println("Nhập mã phòng ban: ");
         int deptId = Validation.checkInputInt();
         employee.setDepartment_id(deptId);
+        // kiểm tra chỉ cho phép nhập giá trị trong List departmentID của department
+
         ManagementEmployee managementEmployee = new ManagementEmployee(employee);
         List<Employee> listEmployee = managementEmployee.getListEmployeeByDeptId();
         if (listEmployee.size() > 0) {
@@ -156,7 +170,7 @@ public class FunctionDeapartment {
         employee.setDepartment_id(deptId);
         ManagementEmployee managementEmployee = new ManagementEmployee(employee);
         List<Employee> listEmployeeInDept = managementEmployee.getListEmployeeByDeptId();
-        System.out.println("Danh sách nhân viên trong phòng ban " + deptId + " là: ");
+        System.out.println("Danh sách nhân viên trong phòng ban " + deptId + " là ");
         if (listEmployeeInDept.size() > 0) {
             System.out.printf("%-15s%-20s%-15s%-10s%-16s%-25s%-20s%-20s%-16s%-10s\n", "EmployeeID", "FullName", "Position", "Age", "Phone", "Email", "Salary", "Tax", "DepartmentID", "IsManager");
             for (Employee emp : listEmployeeInDept) {
@@ -180,19 +194,17 @@ public class FunctionDeapartment {
             List<Employee> listFindEmployee = managementEmployee.getListEmployeeById(listEmployee, empIdTransfer);
             for (Employee emp : listFindEmployee) {
                 emp.showData();
+                if (Validation.checkInputYN()) {
+                    System.out.println("Nhập mã phòng ban muốn chuyển: ");
+                    int deptIdTransfer = managementEmployee.checkInputDepartment(Integer.parseInt(scanner.nextLine()));
+                    emp.setDepartment_id(deptIdTransfer);
+                    ManagementEmployee manageUpdate = new ManagementEmployee(emp);
+                    manageUpdate.transferDepartmentForEmployee();
+                    //emp.showData();
 
+                }
             }
-            Employee employ1 = listEmployee.get(0);
-            // confirm transfer department for employee
-            System.out.println("Nhập mã phòng ban muốn chuyển: ");
-            if (Validation.checkInputYN()) {
-                int deptIdTransfer = managementEmployee.checkInputDepartment(Integer.parseInt(scanner.nextLine()));
-                employ1.setDepartment_id(deptIdTransfer);
-                ManagementEmployee manageUpdate = new ManagementEmployee(employ1);
-                manageUpdate.transferDepartmentForEmployee();
-                //emp.showData();
 
-            }
 
         } else {
             System.out.println("Phòng ban " + deptId + " chưa có nhân viên nào!");
@@ -200,6 +212,41 @@ public class FunctionDeapartment {
     }
 
     public static void addDepartmentForEmployee() {
+        //Hiển thị danh sách những nhân viên chưa có phòng ban nào
+        // Thêm phòng ban cho nhân viên
+        // Xác nhận update thông tin
+        // Update thông tin cho nhân viên đó
+        System.out.println("Danh sách nhân viên chưa có phòng ban nào: ");
+        List<Employee> listEmployeeDeptIsNull = managementDepartment.listEmployeeDeptIsNull();
+        System.out.printf("%-15s%-20s%-15s%-10s%-16s%-25s%-20s%-20s%-16s%-10s\n", "EmployeeID", "FullName", "Position", "Age", "Phone", "Email", "Salary", "Tax", "DepartmentID", "IsManager");
+        for (Employee emp : listEmployeeDeptIsNull) {
+            emp.showData();
+        }
+        System.out.println("Nhập mã nhân viên: ");
+        String empID = Validation.checkInputString();
+        List<String> listCheckId = new ArrayList<>();
+
+        for (int i = 0; i < listEmployeeDeptIsNull.size(); i++) {
+            listCheckId.add(listEmployeeDeptIsNull.get(i).getEmployee_id());
+        }
+        while (!listCheckId.contains(empID)) {
+            System.out.println("Bạn chỉ được phép chọn employee id có trong danh sách bên trên!");
+            empID = Validation.checkInputString();
+        }
+        System.out.println("Thông tin của nhân viên trước khi update: ");
+        Employee employee = new Employee();
+        employee.setEmployee_id(empID);
+        ManagementEmployee managementEmployee = new ManagementEmployee(employee);
+        List<Employee> list = managementEmployee.getListEmployee();
+        List<Employee> employeeList = managementEmployee.getListEmployeeById(list, empID);
+        for (Employee obj : employeeList) {
+            obj.showData();
+            System.out.println("Nhập phòng ban muốn thêm nhân viên: " + empID + ":");
+            int deptId = Validation.checkInputInt();
+            obj.setDepartment_id(deptId);
+            ManagementEmployee manageUpdate = new ManagementEmployee(obj);
+            manageUpdate.addDepartForEmployee();
+        }
 
     }
 }

@@ -1,7 +1,5 @@
 package com.group6;
 
-import java.sql.Date;
-
 public class Employee {
     // private int id;
     private String employee_id;
