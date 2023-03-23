@@ -9,9 +9,9 @@ public class DBContext {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
-            System.out.println("connect successfully!");
+            System.out.println("Kết nối thành công!");
         } catch (Exception ex) {
-            System.out.println("connect failure!");
+            System.out.println("Kết nối thất bại!");
             ex.printStackTrace();
         }
         return conn;

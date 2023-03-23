@@ -20,6 +20,22 @@ public class Validation {
         }
     }
 
+    public static int checkInputIntLimit(int min, int max) {
+        //loop until user input correct
+        while (true) {
+            try {
+                int result = Integer.parseInt(scanner.nextLine().trim());
+                if (result < min || result > max) {
+                    throw new NumberFormatException();
+
+                }
+                return result;
+            } catch (NumberFormatException e) {
+                System.err.println("Please input number in range [" + min + ", " + max + "]: ");
+            }
+        }
+    }
+
     //check user input yes/ no
     public static boolean checkInputYN() {
         //loop until user input correct

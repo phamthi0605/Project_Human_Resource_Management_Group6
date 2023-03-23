@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class FunctionDeapartment {
+public class FunctionDepartment {
     static Scanner scanner = new Scanner(System.in);
     static ManagementDepartment managementDepartment = new ManagementDepartment();
 

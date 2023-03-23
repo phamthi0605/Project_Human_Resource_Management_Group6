@@ -65,9 +65,9 @@ public class ManagementEmployee {
             PreparedStatement sm = con.prepareStatement(sql);
             int count = sm.executeUpdate();
             if (count > 0) {
-                System.out.println("Add employee successfully!");
+                System.out.println("Thêm nhân viên thành công!");
             } else {
-                System.out.println("Add failed!");
+                System.out.println("Thêm nhân viên thất bại!");
             }
             sm.close();
             con.close();
@@ -110,7 +110,7 @@ public class ManagementEmployee {
             if (count > 0) {
                 employee.showData();
             } else {
-                System.out.println("Update failed!");
+                System.out.println("cập nhật thất bại!");
             }
             psmt.close();
             con.close();
@@ -133,7 +133,7 @@ public class ManagementEmployee {
             PreparedStatement sm = con.prepareStatement(sql);
             sm.setString(1, employee.getEmployee_id());
             sm.executeUpdate();
-            System.out.println("Delete successfully!");
+            System.out.println("Xoá nhân viên thành công!");
         } catch (SQLException e) {
             e.getMessage();
         }
@@ -153,7 +153,7 @@ public class ManagementEmployee {
             ptm.setString(4, "%" + employee.getEmail());
             result = ptm.executeQuery();
             if (result.next() == false) {
-                System.out.println("Data empty!");
+                System.out.println("Không có dữ liệu!");
             } else {
                 System.out.printf("%-8s%-15s%-20s%-15s%-10s%-16s%-25s%-20s%-20s%-10s\n", "ID", "EmployeeID", "FullName", "Position", "Age", "Phone", "Email", "Salary", "Tax", "DepartmentID");
                 do {
@@ -192,7 +192,7 @@ public class ManagementEmployee {
             sm = con.createStatement();
             ResultSet rs = sm.executeQuery("select * from employee");
             if (!rs.next()) {
-                System.out.println("Data empty!");
+                System.out.println("Không có dữ liệu!");
             } else {
                 do {
                     Employee employee = new Employee(
@@ -232,7 +232,7 @@ public class ManagementEmployee {
             ptm.setInt(1, employee.getDepartment_id());
             rs = ptm.executeQuery();
             if (rs.next() == false) {
-                System.out.println("Bộ phận này không có nhân viên!");
+                System.out.println("Không có dữ liệu!");
             } else {
                 do {
                     Employee employee = new Employee(
@@ -301,7 +301,7 @@ public class ManagementEmployee {
             if (count > 0) {
                 employee.showData();
             } else {
-                System.out.println("Update failed!");
+                System.out.println("Cập nhật dữ liệu thất bại!");
             }
             psmt.close();
             con.close();
@@ -328,8 +328,8 @@ public class ManagementEmployee {
         }
 
         while (check < 1 || check > idDepartmentList.size()) {
-            System.out.println("Must be input 1 - " + idDepartmentList.size() + "!");
-            System.out.print("Enter Department ID Again: ");
+            System.out.println("Nhập từ 1 - " + idDepartmentList.size() + "!");
+            System.out.print("Nhập lại mã phòng ban: ");
             check = Validation.checkInputInt();
         }
         return check;
@@ -366,7 +366,7 @@ public class ManagementEmployee {
             if (count > 0) {
                 employee.showData();
             } else {
-                System.out.println("Update failed!");
+                System.out.println("Thêm phòng ban cho nhân viên thất bại!");
             }
             psmt.close();
             con.close();
@@ -376,4 +376,5 @@ public class ManagementEmployee {
         }
 
     }
+
 }

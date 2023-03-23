@@ -10,11 +10,11 @@ public class Solution {
         int choose = 0;
         menuProgram();
         System.out.println("Chọn chức năng: ");
-        choose = Validation.checkInputInt();
-        while (choose != 1 && choose != 4) {
+        choose = Validation.checkInputIntLimit(1, 5);
+        while (choose != 1 && choose != 5) {
             System.out.println("Bạn chưa đăng nhập!");
             System.out.println("Chọn lại chức năng: ");
-            choose = Validation.checkInputInt();
+            choose = Validation.checkInputIntLimit(1, 5);
         }
 
         if (choose == 1) {
@@ -43,17 +43,17 @@ public class Solution {
                 while (true) {
                     menuProgram();
                     System.out.println("Vui lòng nhập từ 2 đến 5 để chọn chức năng muốn sử dụng:");
-                    choose = Validation.checkInputInt();
+                    choose = Validation.checkInputIntLimit(2, 5);
                     switch (choose) {
                         case 2:
                             while (true) {
                                 System.out.println("\tQUẢN LÝ NHÂN VIÊN");
                                 menuEmployee();
                                 System.out.println("\tChọn chức năng quản lý nhân viên:");
-                                int optionEmp = Validation.checkInputInt();
+                                int optionEmp = Validation.checkInputIntLimit(1, 6);
                                 while (optionEmp < 1 || optionEmp > 6) {
                                     System.out.println("Chọn lại chức năng: ");
-                                    optionEmp = Validation.checkInputInt();
+                                    optionEmp = Validation.checkInputIntLimit(1, 6);
                                 }
                                 if (optionEmp == 1) {
                                     FunctionEmployee.showListEmployee();
@@ -79,45 +79,71 @@ public class Solution {
                         case 3:
                             while (true) {
                                 //ManagementDepartment mgtd = new ManagementDepartment();
-                                System.out.println("\tMANAGEMENT DEPARTMENT");
+                                System.out.println("\tQUẢN LÝ PHÒNG BAN");
                                 menuDepartment();
                                 System.out.println("\tChọn chức năng quản lý phòng ban:");
-                                int optionDept = Validation.checkInputInt();
+                                int optionDept = Validation.checkInputIntLimit(1, 8);
                                 while (optionDept < 1 || optionDept > 8) {
                                     System.out.println("Chọn lại chức năng: ");
-                                    optionDept = Validation.checkInputInt();
+                                    optionDept = Validation.checkInputIntLimit(1, 8);
                                 }
                                 if (optionDept == 1) {
-                                    FunctionDeapartment.getListDepartment();
+                                    FunctionDepartment.getListDepartment();
                                 }
                                 if (optionDept == 2) {
-                                    FunctionDeapartment.addDepartment();
+                                    FunctionDepartment.addDepartment();
                                 }
                                 if (optionDept == 3) {
-                                    FunctionDeapartment.updateDepartment();
+                                    FunctionDepartment.updateDepartment();
 
                                 }
                                 if (optionDept == 4) {
-                                    FunctionDeapartment.deleteDepartment();
+                                    FunctionDepartment.deleteDepartment();
 
                                 }
                                 if (optionDept == 5) {
-                                    FunctionDeapartment.deleteEmployeeByDepartID();
+                                    FunctionDepartment.deleteEmployeeByDepartID();
                                 }
                                 if (optionDept == 6) {
-                                    FunctionDeapartment.transferDepartmentForEmployee();
-
+                                    FunctionDepartment.transferDepartmentForEmployee();
                                 }
                                 if (optionDept == 7) {
-                                    FunctionDeapartment.addDepartmentForEmployee();
+                                    FunctionDepartment.addDepartmentForEmployee();
                                 }
                                 if (optionDept == 8) {
                                     System.out.println("Thoát");
                                     break;
                                 }
-
                             }
                             break;
+                        case 4:
+                            System.out.println("\tTHỐNG KÊ");
+                            menuStatistical();
+                            System.out.println("\tChọn chức năng thống kê: ");
+                            int optionStatistical = Validation.checkInputIntLimit(1, 4);
+                            while (true) {
+                                while (optionStatistical < 1 || optionStatistical > 4) {
+                                    System.out.println("Chọn lại chức năng: ");
+                                    optionStatistical = Validation.checkInputIntLimit(1, 4);
+                                }
+                                if (optionStatistical == 1) {
+                                    System.out.println("Số lượng nhân viên mỗi phòng ban");
+                                }
+                                if (optionStatistical == 2) {
+                                    System.out.println("Danh sách phòng ban có nhân viên trên 5 người");
+                                }
+                                if (optionStatistical == 3) {
+                                    System.out.println("Liệt kê số nhân viên nam/ nữ");
+                                }
+                                if (optionStatistical == 4) {
+                                    System.out.println("Thoát");
+                                    break;
+                                }
+                            }
+                            break;
+                        case 5:
+                            System.out.println("Thoát");
+                            System.exit(0);
 
                     }
                 }
@@ -128,32 +154,38 @@ public class Solution {
 
     public static void menuProgram() {
         System.out.println("MANAGEMENT RESOURCE EMPLOYEE");
-        System.out.println("1. Login");
-        System.out.println("2. Management employee");
-        System.out.println("3. Management department");
-        System.out.println("4. Statistical ");
-        System.out.println("5. Exit");
+        System.out.println("1. Đăng nhập");
+        System.out.println("2. Quản lý nhân viên");
+        System.out.println("3. Quản lý phòng ban");
+        System.out.println("4. Thống kê ");
+        System.out.println("5. Thoát");
     }
 
     public static void menuEmployee() {
-        System.out.println("\t1.List employee");
-        System.out.println("\t2.Add employee");
-        System.out.println("\t3.Update employee");
-        System.out.println("\t4.Remove employee");
-        System.out.println("\t5.Find employee");
-        System.out.println("\t6. Exit");
+        System.out.println("\t1.Danh sách nhân viên");
+        System.out.println("\t2.Thêm nhân viên");
+        System.out.println("\t3.Cập nhật thông tin nhân viên");
+        System.out.println("\t4.Xoá nhân viên");
+        System.out.println("\t5.Tìm kiếm nhân viên");
+        System.out.println("\t6.Thoát");
     }
 
     public static void menuDepartment() {
-        System.out.println("\t1.List department");
-        System.out.println("\t2.Add department");
-        System.out.println("\t3.Update department");
-        System.out.println("\t4.Remove department");//chưa làm được
-        System.out.println("\t5.Remove employee from department");
-        System.out.println("\t6.Transfer department for employee");
-        System.out.println("\t7.Add department for employee");
-        System.out.println("\t8.Exit");
+        System.out.println("\t1.Danh sách phòng ban");
+        System.out.println("\t2.Thêm phòng ban");
+        System.out.println("\t3.Cập nhật thông tin phòng ban");
+        System.out.println("\t4.Xoá phòng ban");//chưa làm được
+        System.out.println("\t5.Xoá nhân viên từ phòng ban");
+        System.out.println("\t6.Chuyển phòng ban");
+        System.out.println("\t7.Thêm phòng ban cho nhân viên");
+        System.out.println("\t8.Thoát");
     }
 
+    public static void menuStatistical() {
+        System.out.println("1. Số lượng nhân viên mỗi phòng ban");
+        System.out.println("2. Danh sách phòng ban có nhân viên trên 5 người");
+        System.out.println("3. Liệt kê số nhân viên nam/ nữ");
+        System.out.println("4. Thoát");
+    }
 
 }
