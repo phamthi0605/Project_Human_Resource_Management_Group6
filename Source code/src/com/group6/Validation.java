@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 public class Validation {
     static Scanner scanner = new Scanner(System.in);
+    static final String PHONE_VALID = "^\\d{9,10}$";
+    static final String EMAIL_VALID = "^[0-9A-Za-z+_.%]+@[0-9A-Za-z.-]+\\.[A-Za-z]{2,4}$";
 
     public static int checkInputInt() {
         while (true) {
@@ -142,5 +144,98 @@ public class Validation {
             return false;
         }
         return true;
+    }
+
+    public static boolean checkChangeInfomation(Employee employee, String empID, int deptTransfer) {
+        if (empID.equalsIgnoreCase(employee.getEmployee_id()) && deptTransfer == employee.getDepartment_id()) {
+            return false;
+        }
+        return true;
+    }
+
+    private static int checkIntLimit(int min, int max) {
+        while (true) {
+            try {
+                int n = Integer.parseInt(scanner.nextLine());
+                if (n < min || n > max) {
+                    throw new NumberFormatException();
+                }
+                return n;
+            } catch (NumberFormatException ex) {
+                System.err.println("Re-input");
+            }
+        }
+    }
+
+    public static String checkInputString() {
+        //loop until user input true value
+        while (true) {
+            String result = scanner.nextLine().trim();
+            if (result.isEmpty()) {
+                System.err.println("Not empty.");
+            } else {
+                return result;
+            }
+        }
+    }
+
+    private static String checkIsDepartment() {
+        while (true) {
+            int n = checkIntLimit(1, 4);
+            String result = null;
+            switch (n) {
+                case 1:
+                    result = "HR";
+                    break;
+                case 2:
+                    result = "Dev";
+                    break;
+                case 3:
+                    result = "Accounting";
+                    break;
+                case 4:
+                    result = "Sales";
+            }
+            return result;
+        }
+    }
+
+    public static String checkInputPhone() {
+        while (true) {
+            String result = scanner.nextLine().trim();
+            if (result.length() != 0 && result.matches(PHONE_VALID)) {
+                return result;
+            } else {
+                System.err.println("Re-input");
+            }
+        }
+    }
+
+    public static String checkInputEmail() {
+        while (true) {
+            String result = scanner.nextLine().trim();
+            if (result.length() != 0 && result.matches(EMAIL_VALID)) {
+                return result;
+            } else {
+                System.err.println("Re-input");
+            }
+        }
+    }
+
+
+    public static float checkSalary() {
+        //loop until user input correct
+        while (true) {
+            try {
+                float result = Float.parseFloat(scanner.nextLine().trim());
+                if (result < 0) {
+                    throw new NumberFormatException();
+                }
+                return result;
+            } catch (NumberFormatException e) {
+                System.err.println("Salary must be greater than 0");
+                System.out.print("Enter again: ");
+            }
+        }
     }
 }

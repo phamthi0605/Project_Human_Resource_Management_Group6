@@ -30,8 +30,8 @@ CREATE TABLE employee(
 	person_Income_Tax FLOAT,
 	hire_date DATE,
 	end_date DATE,
-	department_id INT,
-	is_manager ENUM('1'),
+	department_idemployee INT,
+	is_manager ENUM('1'), -- nhân viên này có phải là trưởng phòng hay ko
 	UNIQUE (department_id, is_manager),
 	FOREIGN KEY (department_id) REFERENCES department(id)
 );

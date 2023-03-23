@@ -71,7 +71,6 @@ public class ManagementDepartment {
         }
     }
 
-
     public void updateDepartment() {
         Scanner scanner = new Scanner(System.in);
         String sql = "UPDATE department SET department_name = ?, address=? WHERE id = ?";

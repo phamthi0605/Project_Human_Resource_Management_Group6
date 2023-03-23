@@ -1,12 +1,11 @@
 package com.group6;
 
 import java.nio.charset.StandardCharsets;
+import java.rmi.StubNotFoundException;
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
 
 public class ManagementEmployee {
     private Employee employee;
@@ -81,7 +80,7 @@ public class ManagementEmployee {
     }
 
     /**
-     * Add employees to the database
+     * Update employee
      */
     public void updateEmployee() {
         String sql = "UPDATE employee SET full_name = ?, position=?, age=?, phone =?, email = ?, " +
@@ -151,9 +150,9 @@ public class ManagementEmployee {
         try {
             PreparedStatement ptm = con.prepareStatement("select * from employee where employee_id = ? or full_name =? or phone=? or email=? ");
             ptm.setString(1, employee.getEmployee_id());
-            ptm.setString(2, employee.getFullName());
-            ptm.setString(3, employee.getPhoneNumber());
-            ptm.setString(4, employee.getEmail());
+            ptm.setString(2, "%" + employee.getFullName());
+            ptm.setString(3, "%" + employee.getPhoneNumber());
+            ptm.setString(4, "%" + employee.getEmail());
             result = ptm.executeQuery();
             if (result.next() == false) {
                 System.out.println("Data empty!");
@@ -274,7 +273,68 @@ public class ManagementEmployee {
         return getList;
     }
 
+    public void transferDepartmentForEmployee() {
+        String sql = "UPDATE employee SET full_name = ?, position=?, age=?, phone =?, email = ?, " +
+                "salary =?, person_Income_Tax=?, hire_date=?, department_id=?, is_manager=?" +
+                " WHERE employee_id = ?";
+        try {
+            Connection con = null;
+            DBContext db = new DBContext();
+            con = db.getConnection();
 
-    public void getEmployeeByDepatID() {
+            PreparedStatement psmt = con.prepareStatement(sql);
+
+            // set value for parameter of sql statement
+            psmt.setString(1, employee.getFullName());
+            psmt.setString(2, employee.getPosition());
+            psmt.setInt(3, employee.getAge());
+            psmt.setString(4, employee.getPhoneNumber());
+            psmt.setString(5, employee.getEmail());
+            psmt.setFloat(6, employee.getSalary());
+            psmt.setFloat(7, employee.getPerson_Income_Tax());
+            psmt.setString(8, employee.getHire_date());
+            psmt.setInt(9, employee.getDepartment_id());
+            psmt.setString(10, employee.getIs_manager());
+
+            psmt.setString(11, employee.getEmployee_id());
+
+            psmt.executeUpdate();
+            int count = psmt.executeUpdate();
+            if (count > 0) {
+                employee.showData();
+            } else {
+                System.out.println("Update failed!");
+            }
+            psmt.close();
+            con.close();
+
+        } catch (SQLException e) {
+            e.getMessage();
+        }
+
     }
+
+    public static int checkInputDepartment(int check) {
+        List<Integer> idDepartmentList = new ArrayList<>();
+        Connection con = null;
+        DBContext db = new DBContext();
+        con = db.getConnection();
+        try {
+            Statement sm = con.createStatement();
+            ResultSet resultSet = sm.executeQuery("SELECT id FROM department");
+            while (resultSet.next()) {
+                idDepartmentList.add(resultSet.getInt("id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        while (check < 1 || check > idDepartmentList.size()) {
+            System.out.println("Must be input 1 - " + idDepartmentList.size() + "!");
+            System.out.print("Enter Department ID Again: ");
+            check = Validation.checkInputInt();
+        }
+        return check;
+    }
+
 }
