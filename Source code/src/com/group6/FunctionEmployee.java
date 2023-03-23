@@ -29,7 +29,7 @@ public class FunctionEmployee {
             System.out.println("Họ và tên: ");
             String fullName = Validation.checkInputString();
             if (!Validation.checkEmployeeById(employeeList, employeeId, fullName)) {
-                System.err.println("Employee id has exist . Pleas re-input.");
+                System.err.println("Nhân viên " + employeeId + " đã tồn tại. Nhập lại mã nhân viên: ");
                 continue;
             }
             System.out.println("Vị trí: ");
@@ -69,12 +69,15 @@ public class FunctionEmployee {
     public static void updateEmployee() {
         List<Employee> employeeList = managementEmployee.getListEmployee();
         if (employeeList.isEmpty()) {
-            System.err.println("List empty.");
+            System.err.println("Không có dữ liệu.");
             return;
+        }
+        System.out.println("Cập nhật thông tin nhân viên");
+        for (Employee employee : employeeList) {
+            employee.showData();
         }
         while (true) {
             Employee employeeUpdate = new Employee();
-            System.out.println("Cập nhật thông tin nhân viên");
             System.out.println("Nhập mã nhân viên cần cập nhật: ");
             String employeeId = scanner.nextLine();
             List<Employee> listFindEmployee = managementEmployee.getListEmployeeById(employeeList, employeeId);
@@ -86,60 +89,60 @@ public class FunctionEmployee {
                 System.out.printf("%-15s%-20s%-15s%-10s%-16s%-25s%-20s%-20s%-16s%-10s\n", "EmployeeID", "FullName", "Position", "Age", "Phone", "Email", "Salary", "Tax", "DepartmentID", "IsManager");
                 for (Employee employee : listFindEmployee) {
                     employee.showData();
-                    System.out.print("Do you want to update (U/N) employee: ");
-                    if (Validation.checkInputUD()) {
-                        System.out.println("Họ và tên: ");
-                        String fullName = Validation.checkInputString();
-                        System.out.println("Vị trí: ");
-                        String position = scanner.nextLine();
-                        System.out.println("Tuổi: ");
-                        int age = Validation.checkInputInt();
-                        System.out.println("Phone number: ");
-                        String phoneNumber = Validation.checkInputString();
-                        List<String> listCheckPhone = new ArrayList<>();
-
-                        for (int i = 0; i < employeeList.size(); i++) {
-                            listCheckPhone.add(employeeList.get(i).getPhoneNumber());
-                        }
-                        while (listCheckPhone.contains(phoneNumber)) {
-                            System.out.println("Số điện thoại đã bị trùng vui lòng nhập lại:");
-                            phoneNumber = Validation.checkInputString();
-                        }
-                        System.out.println("Email: ");
-                        String email = scanner.nextLine();
-                        System.out.println("Lương: ");
-                        float salary = Validation.checkSalary();
-                        // tính thuế
-                        employeeUpdate.setPerson_Income_Tax(salary);
-                        float tax = employeeUpdate.getPerson_Income_Tax();
-                        // lấy currentDate
-                        Date date = new Date();
-                        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
-                        String hireDate = formatDate.format(date);
-                        // nhập phòng ban cho nhân viên
-                        System.out.println("Mã phòng ban: (1. HR), (2. Sale), (3. Accounting),(4. Dev):");
-                        int deptId = ManagementEmployee.checkInputDepartment(Validation.checkInputInt());
-                        // nhập quản lý cho nhân viên
-                        System.out.println("Quản lý của nhân viên: ");
-                        String deptManagerID = Validation.checkInputString();
-                        String isManager = null;
-                        if (deptManagerID.equals("y")) {
-                            isManager = "'1'";
-                        }
-                        //check employee change or not
-                        if (!Validation.checkChangeInfomation(employee, employeeId, fullName, position, email, salary, tax, deptId, isManager)) {
-                            System.err.println("Dữ liệu không thay đổi");
-                        }
-                        //check employee exist or no
-                        if (Validation.checkemployeeExist(employeeList, employeeId, email)) {
-                            employeeUpdate = new Employee(employeeId, fullName, position, age, phoneNumber, email, salary, tax, hireDate, deptId, isManager);
-                            ManagementEmployee managementEmployee = new ManagementEmployee(employeeUpdate);
-                            System.out.println("Dữ liệu employee sau khi update: ");
-                            managementEmployee.updateEmployee();
-                        }
-                    }
+                }
+                System.out.println("Họ và tên: ");
+                String fullName = Validation.checkInputString();
+                System.out.println("Vị trí: ");
+                String position = Validation.checkInputString();
+                System.out.println("Tuổi: ");
+                int age = Validation.checkInputAge();
+                System.out.println("Số điện thoại: ");
+                String phoneNumber = Validation.checkInputString();
+                List<String> listCheckPhone = new ArrayList<>();
+                for (int i = 0; i < employeeList.size(); i++) {
+                    listCheckPhone.add(employeeList.get(i).getPhoneNumber());
+                }
+                while (listCheckPhone.contains(phoneNumber)) {
+                    System.out.println("Số điện thoại " + phoneNumber + " đã tồn tại. Nhập lại: ");
+                    phoneNumber = Validation.checkInputString();
+                }
+                System.out.println("Email: ");
+                String email = Validation.checkInputString();
+                List<String> listCheckEmail = new ArrayList<>();
+                for (int i = 0; i < employeeList.size(); i++) {
+                    listCheckEmail.add(employeeList.get(i).getEmail());
+                }
+                while (listCheckEmail.contains(email)) {
+                    System.out.println("Email " + email + " đã tồn tại. Nhập lại: ");
+                    email = Validation.checkInputString();
+                }
+                //String email = Validation.checkInputString();
+                System.out.println("Lương: ");
+                float salary = Validation.checkSalary();
+                // tính thuế
+                employeeUpdate.setPerson_Income_Tax(salary);
+                float tax = employeeUpdate.getPerson_Income_Tax();
+                // lấy currentDate
+                Date date = new Date();
+                SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
+                String hireDate = formatDate.format(date);
+                // nhập phòng ban cho nhân viên
+                System.out.println("Mã phòng ban:");
+                int deptId = managementEmployee.checkInputDepartment(Integer.parseInt(scanner.nextLine()));
+                // nhập quản lý cho nhân viên
+                System.out.println("Quản lý của nhân viên: ");
+                String deptManagerID = scanner.nextLine();
+                String isManager = null;
+                if (deptManagerID.equals("y")) {
+                    isManager = "'1'";
+                }
+                employeeUpdate = new Employee(employeeId, fullName, position, age, phoneNumber, email, salary, tax, hireDate, deptId, isManager);
+                if (Validation.checkemployeeExist(employeeList, employeeId, email)) {
+                    ManagementEmployee managementEmployee = new ManagementEmployee(employeeUpdate);
+                    managementEmployee.updateEmployee();
                     break;
                 }
+
             }
             break;
         }

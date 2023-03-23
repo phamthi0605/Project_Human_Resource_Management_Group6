@@ -7,7 +7,6 @@ import java.util.Scanner;
 
 public class ManagementDepartment {
     Department department;
-    Employee employee;
 
     public ManagementDepartment() {
 
@@ -15,10 +14,6 @@ public class ManagementDepartment {
 
     public ManagementDepartment(Department dept) {
         this.department = dept;
-    }
-
-    public ManagementDepartment(Employee employee) {
-        this.employee = employee;
     }
 
     public List<Department> getListDepartment() {
@@ -59,9 +54,9 @@ public class ManagementDepartment {
             sm.setString(2, department.getAddress());
             int count = sm.executeUpdate();
             if (count > 0) {
-                System.out.println("Add department successfully!");
+                System.out.println("Thêm phòng ban thành công!");
             } else {
-                System.out.println("Add department failed!");
+                System.out.println("Thêm phòng ban thất bại!");
             }
             sm.close();
             con.close();
@@ -86,9 +81,9 @@ public class ManagementDepartment {
             sm.executeUpdate();
             int count = sm.executeUpdate();
             if (count > 0) {
-                System.out.println("Update department successfully!");
+                System.out.println("Cập nhật phòng ban thành công.");
             } else {
-                System.out.println("Update department failed!");
+                System.out.println("Cập nhật phòng ban thất bại.");
             }
         } catch (SQLException e) {
             e.getMessage();
@@ -105,7 +100,7 @@ public class ManagementDepartment {
             PreparedStatement sm = con.prepareStatement(sql);
             sm.setInt(1, department.getDepartmentId());
             sm.executeUpdate();
-            System.out.println("Delete department successfully!");
+            System.out.println("Xoá phòng ban thành công!");
 
         } catch (SQLException e) {
             e.getMessage();
@@ -132,7 +127,7 @@ public class ManagementDepartment {
             ResultSet rs = sm.executeQuery("SELECT * FROM employee\n" +
                     "WHERE department_id IS NULL");
             if (!rs.next()) {
-                System.out.println("Data empty!");
+                System.out.println("Không có dữ liệu!");
             } else {
                 do {
                     Employee employee = new Employee(

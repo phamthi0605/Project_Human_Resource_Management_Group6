@@ -51,22 +51,22 @@ public class FunctionDepartment {
         int deptId = Integer.parseInt(scanner.nextLine());
         List<Department> listFindDeptByID = managementDepartment.getListDepartmentById(departmentList, deptId);
         if (listFindDeptByID.isEmpty()) {
-            System.err.println("Not found department.");
+            System.err.println("Không có bộ phận này!");
         } else {
             System.out.println("Kết quả tìm kiếm là: ");
             System.out.printf("%-20s%-21s%-13s\n", "DepartmentId", "DepartmentName", "Address");
             for (Department department : listFindDeptByID) {
                 department.showData();
             }
-            System.out.print("Do you want to update (U/N) employee: ");
-            if (Validation.checkInputUD()) {
+            System.out.print("Bạn có muốn cập nhật nhân viên(Yes/No): ");
+            if (Validation.checkInputYN()) {
                 System.out.println("Tên phòng ban:");
                 String deptNameUpdate = scanner.nextLine();
                 System.out.println("Địa chỉ: ");
                 String addressUpdate = scanner.nextLine();
                 //check employee change or not
                 if (!Validation.checkchangeInforDepartment(listFindDeptByID.get(0), deptId, deptNameUpdate, addressUpdate)) {
-                    System.err.println("Nothing change.");
+                    System.err.println("Dữ liệu không thay đổi");
                 }
                 System.out.println("Dữ liệu department trước khi update: ");
                 System.out.printf("%-20s%-21s%-13s\n", "DepartmentId", "DepartmentName", "Address");

@@ -3,12 +3,10 @@ package com.group6;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class ManagementEmployee {
     private Employee employee;
     private Admin admin;
-    Scanner scanner = new Scanner(System.in);
 
     public ManagementEmployee() {
 
@@ -110,7 +108,7 @@ public class ManagementEmployee {
             if (count > 0) {
                 employee.showData();
             } else {
-                System.out.println("cập nhật thất bại!");
+                System.out.println("cập nhật nhân viên thất bại!");
             }
             psmt.close();
             con.close();
@@ -345,30 +343,30 @@ public class ManagementEmployee {
             DBContext db = new DBContext();
             con = db.getConnection();
 
-            PreparedStatement psmt = con.prepareStatement(sql);
+            PreparedStatement stmt = con.prepareStatement(sql);
 
             // set value for parameter of sql statement
-            psmt.setString(1, employee.getFullName());
-            psmt.setString(2, employee.getPosition());
-            psmt.setInt(3, employee.getAge());
-            psmt.setString(4, employee.getPhoneNumber());
-            psmt.setString(5, employee.getEmail());
-            psmt.setFloat(6, employee.getSalary());
-            psmt.setFloat(7, employee.getPerson_Income_Tax());
-            psmt.setString(8, employee.getHire_date());
-            psmt.setInt(9, employee.getDepartment_id());
-            psmt.setString(10, employee.getIs_manager());
+            stmt.setString(1, employee.getFullName());
+            stmt.setString(2, employee.getPosition());
+            stmt.setInt(3, employee.getAge());
+            stmt.setString(4, employee.getPhoneNumber());
+            stmt.setString(5, employee.getEmail());
+            stmt.setFloat(6, employee.getSalary());
+            stmt.setFloat(7, employee.getPerson_Income_Tax());
+            stmt.setString(8, employee.getHire_date());
+            stmt.setInt(9, employee.getDepartment_id());
+            stmt.setString(10, employee.getIs_manager());
 
-            psmt.setString(11, employee.getEmployee_id());
+            stmt.setString(11, employee.getEmployee_id());
 
-            psmt.executeUpdate();
-            int count = psmt.executeUpdate();
+            stmt.executeUpdate();
+            int count = stmt.executeUpdate();
             if (count > 0) {
                 employee.showData();
             } else {
                 System.out.println("Thêm phòng ban cho nhân viên thất bại!");
             }
-            psmt.close();
+            stmt.close();
             con.close();
 
         } catch (SQLException e) {

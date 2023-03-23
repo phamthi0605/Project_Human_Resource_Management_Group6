@@ -5,8 +5,6 @@ import java.util.Scanner;
 
 public class Validation {
     static Scanner scanner = new Scanner(System.in);
-    static final String PHONE_VALID = "^\\d{9,10}$";
-    static final String EMAIL_VALID = "^[0-9A-Za-z+_.%]+@[0-9A-Za-z.-]+\\.[A-Za-z]{2,4}$";
 
     public static int checkInputInt() {
         while (true) {
@@ -14,8 +12,22 @@ public class Validation {
                 int result = Integer.parseInt(scanner.nextLine().trim());
                 return result;
             } catch (NumberFormatException e) {
-                System.err.println("Must be input integer.");
-                System.out.print("Enter again: ");
+                System.err.println("Phải nhập số nguyên. Nhập lại: ");
+            }
+        }
+    }
+
+    //NumberFormatException():bị ném ra khi một Chuỗi có định dạng sai và không thể chuyển đổi thành một số.
+    public static int checkInputAge() {
+        while (true) {
+            try {
+                int result = Integer.parseInt(scanner.nextLine().trim());
+                if (result < 18) {
+                    throw new NumberFormatException();
+                }
+                return result;
+            } catch (NumberFormatException e) {
+                System.err.println("Phải nhập số nguyên và tuổi phải lớn hơn 18.");
             }
         }
     }
@@ -31,7 +43,7 @@ public class Validation {
                 }
                 return result;
             } catch (NumberFormatException e) {
-                System.err.println("Please input number in range [" + min + ", " + max + "]: ");
+                System.err.println("Nhập giá trị trong khoảng [" + min + ", " + max + "]: ");
             }
         }
     }
@@ -40,7 +52,7 @@ public class Validation {
     public static boolean checkInputYN() {
         //loop until user input correct
         while (true) {
-            System.out.println("Do you want to continue: ");
+            System.out.println("Bạn có muốn tiếp tục thực hiện (Yes/ No): ");
             String result = scanner.nextLine();
             //return true if user input y/Y
             if (result.equalsIgnoreCase("Y")) {
@@ -50,40 +62,7 @@ public class Validation {
             if (result.equalsIgnoreCase("N")) {
                 return false;
             }
-            System.err.println("Please input y/Y or n/N.");
-            System.out.print("Enter again: ");
-        }
-    }
-
-    public static boolean checkInputUD() {
-        //loop until user input correct
-        while (true) {
-            String result = scanner.nextLine();
-            //return true if user input u/U
-            if (result.equalsIgnoreCase("U")) {
-                return true;
-            }
-            //return false if user input n/N
-            if (result.equalsIgnoreCase("N")) {
-                return false;
-            }
-            System.err.println("Please input u/U or n/N.");
-            System.out.print("Enter again: ");
-        }
-    }
-
-    //check update department
-    public static String checkInputCourse() {
-        //loop until user input correct
-        while (true) {
-            String result = scanner.nextLine();
-            //check input departmentName ='HR', 'Sale','Accounting'
-            if (result.equalsIgnoreCase("hr")
-                    || result.equalsIgnoreCase("sale")
-                    || result.equalsIgnoreCase("accounting")) {
-                return result;
-            }
-            System.out.print("Enter again: ");
+            System.err.println("Nhập y/Y hoặc n/N: ");
         }
     }
 
@@ -168,75 +147,17 @@ public class Validation {
         return true;
     }
 
-    private static int checkIntLimit(int min, int max) {
-        while (true) {
-            try {
-                int n = Integer.parseInt(scanner.nextLine());
-                if (n < min || n > max) {
-                    throw new NumberFormatException();
-                }
-                return n;
-            } catch (NumberFormatException ex) {
-                System.err.println("Re-input");
-            }
-        }
-    }
-
     public static String checkInputString() {
         //loop until user input true value
         while (true) {
             String result = scanner.nextLine().trim();
             if (result.isEmpty()) {
-                System.err.println("Not empty.");
+                System.err.println("Không được để trống!");
             } else {
                 return result;
             }
         }
     }
-
-    private static String checkIsDepartment() {
-        while (true) {
-            int n = checkIntLimit(1, 4);
-            String result = null;
-            switch (n) {
-                case 1:
-                    result = "HR";
-                    break;
-                case 2:
-                    result = "Dev";
-                    break;
-                case 3:
-                    result = "Accounting";
-                    break;
-                case 4:
-                    result = "Sales";
-            }
-            return result;
-        }
-    }
-
-    public static String checkInputPhone() {
-        while (true) {
-            String result = scanner.nextLine().trim();
-            if (result.length() != 0 && result.matches(PHONE_VALID)) {
-                return result;
-            } else {
-                System.err.println("Re-input");
-            }
-        }
-    }
-
-    public static String checkInputEmail() {
-        while (true) {
-            String result = scanner.nextLine().trim();
-            if (result.length() != 0 && result.matches(EMAIL_VALID)) {
-                return result;
-            } else {
-                System.err.println("Re-input");
-            }
-        }
-    }
-
 
     public static float checkSalary() {
         //loop until user input correct
@@ -248,8 +169,8 @@ public class Validation {
                 }
                 return result;
             } catch (NumberFormatException e) {
-                System.err.println("Salary must be greater than 0");
-                System.out.print("Enter again: ");
+                System.err.println("Lương phải lớn hơn 0.");
+                System.out.print("Nhập lại: ");
             }
         }
     }
