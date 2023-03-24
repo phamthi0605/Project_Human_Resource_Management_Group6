@@ -43,7 +43,7 @@ public class FunctionEmployee {
             float tax = employee.getPerson_Income_Tax();
             // lấy currentDate
             Date date = new Date();
-            SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
+            SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String hireDate = formatDate.format(date);
             // nhập phòng ban cho nhân viên
             System.out.println("Mã phòng ban:");
@@ -124,7 +124,8 @@ public class FunctionEmployee {
                 float tax = employeeUpdate.getPerson_Income_Tax();
                 // lấy currentDate
                 Date date = new Date();
-                SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
+                SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                // SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
                 String hireDate = formatDate.format(date);
                 // nhập phòng ban cho nhân viên
                 System.out.println("Mã phòng ban:");
